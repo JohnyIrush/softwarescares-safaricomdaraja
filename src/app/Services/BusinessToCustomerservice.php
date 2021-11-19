@@ -2,7 +2,38 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
-class BusinessToCustomerservice
+use Illuminate\Support\Facades\App;
+use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+
+class BusinessToCustomerservice extends Transaction implements TransactionInterface
 {
-    
+    use AuthorizationService;
+
+    private $request;
+
+    public function __construct($request)
+    {
+        $this->request = $request;
+    }
+
+    public function transaction()
+    {
+        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
+
+        $body = [
+            "InitiatorName" => "testapi",
+            "SecurityCredential" => $this->darajaPasswordGenerator(),
+            "CommandID" => "BusinessPayment",
+            "Amount" => $this->request->amount,
+            "PartyA" => env("MPESA_SHORTCODE"),
+            "PartyB" => $this->request->phone,
+            "Remarks" => "Test remarks",
+            "QueueTimeOutURL" => "https://daraja.softwarescares.com/b2c/queue",
+            "ResultURL" => "https://daraja.softwarescares.com/b2c/result",
+            "Occassion" => "rrrrrrrrrrrr" 
+        ];
+
+        return json_encode($this->serviceRequest($url, $body));
+    }
 }
