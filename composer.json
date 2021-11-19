@@ -21,7 +21,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "SoftwaresCares\\SuperBlog\\src\\app\\Providers\\DarajaServiceProvider"
+                "src\\app\\Providers\\DarajaServiceProvider"
             ],
             "aliases": {
                
