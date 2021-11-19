@@ -1,6 +1,6 @@
 <?php
 
-namespace Softwarescares\Safaricomdaraja\Http\Controllers;
+namespace Softwarescares\Safaricomdaraja\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
