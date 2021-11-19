@@ -1,6 +1,6 @@
 <?php
 
-namespace SoftwaresCares\SuperBlog\app\Providers;
+namespace Softwarescares\Safaricomdaraja\app\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +23,7 @@ class DarajaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        # $this->loadRoutesFrom(__DIR__.'/../routes/web.php'); //-- web routes
+        # $this->loadRoutesFrom(__DIR__.'/../routes/api.php'); //-- api routes
     }
 }

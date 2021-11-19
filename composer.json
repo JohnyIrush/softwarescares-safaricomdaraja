@@ -16,12 +16,12 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        
+        "orchestra/testbench": "^6.23"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "vendor/softwarescares/safaricomdaraja/src/app/Providers/DarajaServiceProvider"
+                "Softwarescares\\Safaricomdaraja\\app\\Providers\\DarajaServiceProvider"
             ],
             "aliases": {
                
