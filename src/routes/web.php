@@ -6,6 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/safaricomdaraja', function(){
 
-    return response()->json([],200);
+    return response()->json(['safaricomdaraja running'],200);
 
 });
