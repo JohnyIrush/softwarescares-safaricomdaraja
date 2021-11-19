@@ -1,0 +1,21 @@
+{
+    "name": "softwarescares/safaricomdaraja",
+    "description": "Safaricom daraja api integration for accessing mpesa services",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Softwarescares\\Safaricomdaraja\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "John Irungu",
+            "email": "johnydanxin@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "orchestra/testbench": "^6.23"
+    }
+}
