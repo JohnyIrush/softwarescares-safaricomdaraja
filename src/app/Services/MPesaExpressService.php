@@ -40,4 +40,17 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
         return json_encode($this->serviceRequest($url, $body));
     }
+
+    public function mpesaExpressQuery()
+    {
+        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/stkpushquery/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
+        $body = [
+            "BusinessShortCode" => 174379,
+            "Password" => "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjExMTIwMTcxODM4",
+            "Timestamp" => "20211120171838",
+            "CheckoutRequestID" => "ws_CO_201120211705556658",
+        ];
+
+        return json_encode($this->serviceRequest($url, $body));
+    }
 }
