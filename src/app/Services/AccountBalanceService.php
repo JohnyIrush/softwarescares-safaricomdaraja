@@ -35,4 +35,11 @@ class AccountBalanceService extends Transaction implements TransactionInterface
 
         return json_encode($this->serviceRequest($url, $body));
     }
+
+    /*** Handle Transaction Response ***/
+
+    public function result($result)
+    {
+        
+    }
 }

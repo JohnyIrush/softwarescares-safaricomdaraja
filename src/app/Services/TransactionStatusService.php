@@ -36,4 +36,11 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
 
         return json_encode($this->serviceRequest($url, $body));
     }
+
+    /*** Handle Transaction Response ***/
+
+    public function result($result)
+    {
+        
+    }
 }

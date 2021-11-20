@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
 class BusinessToCustomerservice extends Transaction implements TransactionInterface
@@ -30,10 +31,29 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "PartyB" => $this->request->phone,
             "Remarks" => "Test remarks",
             "QueueTimeOutURL" => "https://daraja.softwarescares.com/b2c/queue",
-            "ResultURL" => "https://daraja.softwarescares.com/b2c/result",
+            "ResultURL" => env("MPESA_APP_DOMAIN_URL") . "/businesstocustomer/result",
             "Occassion" => "rrrrrrrrrrrr" 
         ];
 
         return json_encode($this->serviceRequest($url, $body));
     }
+
+    /*** Handle Transaction Response ***/
+
+    public function result($result)
+    {
+        if($result["Body"]["stkCallback"]["ResultCode"] === "0")
+        {
+            // Fire Notification
+
+            // Fire an event to Update Transaction Table 
+
+            event(new TransactionEvent($result));
+        }
+        else
+        {
+            // Fire Notification
+        }
+    }
+
 }

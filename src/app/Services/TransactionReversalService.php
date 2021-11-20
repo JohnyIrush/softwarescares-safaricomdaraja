@@ -37,4 +37,11 @@ class TransactionReversalService extends Transaction implements TransactionInter
 
         return json_encode($this->serviceRequest($url, $body));
     }
+
+    /*** Handle Transaction Response ***/
+
+    public function result($result)
+    {
+        
+    }
 }

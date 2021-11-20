@@ -9,6 +9,8 @@ use App\Http\Controllers\MpesaExpressController;
 use App\Http\Controllers\TransactionReversalController;
 use Illuminate\Support\ServiceProvider;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Listeners\TransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Services\AccountBalanceService;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
@@ -17,6 +19,18 @@ use Softwarescares\Safaricomdaraja\app\Services\TransactionReversalService;
 
 class DarajaTransactionProvider extends ServiceProvider
 {
+
+    /**
+    * The event listener mappings for the application.
+    *
+    * @var array
+    */
+    protected $listen = [
+     TransactionEvent::class => [
+          TransactionEventListener::class,
+         ],
+     ];
+
     /**
      * Register services.
      *

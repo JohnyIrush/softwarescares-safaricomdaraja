@@ -47,6 +47,18 @@ class MpesaExpressController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function result(Request $request)
+    {
+        $this->transactionService->result($request->all());
+    }
+
+
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
