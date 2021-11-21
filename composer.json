@@ -16,7 +16,6 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "orchestra/testbench": "^6.23"
     },
     "extra": {
         "laravel": {
