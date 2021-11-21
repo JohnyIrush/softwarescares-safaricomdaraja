@@ -3,8 +3,9 @@
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
-use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 use Symfony\Contracts\Translation\TranslatableInterface;
 
@@ -22,13 +23,13 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
     /*** Customer To business ***/
     public function transaction()
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/c2b/v1/simulate" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/c2b/v1/simulate" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
 
         $body = [
-            "CommandID" =>  "CustomerPayBillOnline",
+            "CommandID" =>  env("MPESA_COMMANDID"),
             "Amount" => $this->request->amount,
             "Msisdn" => $this->request->phone,
-            "BillRefNumber" => "00000",
+            "BillRefNumber" => Auth::user()->account,
             "ShortCode" => env("MPESA_SHORTCODE")
         ];
 
@@ -37,20 +38,49 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function validation($result)
     {
-        if($result["Body"]["stkCallback"]["ResultCode"] === "0")
+        if($result->TransAmount === "0")
         {
             // Fire Notification
 
+
             // Fire an event to Update Transaction Table 
 
-            event(new TransactionEvent($result));
+            event(new CustomerToBusinessTransactionEvent($result));
+
+            // Return validation response accepted depending on our validation rules
+
+            return json_encode(
+                [
+                    "ResultCode" => 0,
+                    "ResultDesc" => "Accepted"
+                ]
+            );
         }
         else
         {
             // Fire Notification
+
+            // Return validation response - rejected depending on our validation rules
+            return json_encode(
+                [
+                    "ResultCode" => 1,
+                    "ResultDesc" => "Rejected"
+                ]
+            );            
         }
+    }
+
+    public function confirmation($result)
+    {
+        // Fire Notification
+        
+    }
+
+    public function result($result)
+    {
+        
     }
 
     
@@ -66,13 +96,13 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
     
     public function customerToBusinessRegisterURL()
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/c2b/v1/registerurl" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/c2b/v1/registerurl" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
 
         $body = array(
             "ShortCode" => env("MPESA_SHORTCODE"),
             "ResponseType" => "Completed",
-            "ConfirmationURL" => env("MPESA_CONFIRMATION_URL"),
-            "ValidationURL" => env("MPESA_VALIDATION_URL")
+            "ConfirmationURL" => env("MPESA_APP_DOMAIN_URL") . "/confirmation",
+            "ValidationURL" => env("MPESA_APP_DOMAIN_URL") . "/validation"
         );
 
         return json_encode($this->serviceRequest($url, $body)); 

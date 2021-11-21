@@ -4,7 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
-use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
 class BusinessToCustomerservice extends Transaction implements TransactionInterface
@@ -20,19 +20,19 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
 
     public function transaction()
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
 
         $body = [
-            "InitiatorName" => "testapi",
+            "InitiatorName" => env("APP_NAME"),
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "BusinessPayment",
             "Amount" => $this->request->amount,
             "PartyA" => env("MPESA_SHORTCODE"),
             "PartyB" => $this->request->phone,
-            "Remarks" => "Test remarks",
-            "QueueTimeOutURL" => "https://daraja.softwarescares.com/b2c/queue",
+            "Remarks" => "",
+            "QueueTimeOutURL" => env("MPESA_APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
             "ResultURL" => env("MPESA_APP_DOMAIN_URL") . "/businesstocustomer/result",
-            "Occassion" => "rrrrrrrrrrrr" 
+            "Occassion" => "" 
         ];
 
         return json_encode($this->serviceRequest($url, $body));
@@ -48,12 +48,18 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
 
             // Fire an event to Update Transaction Table 
 
-            event(new TransactionEvent($result));
+            event(new BusinessToCustomerTransactionEvent($result));
         }
         else
         {
             // Fire Notification
         }
+    }
+
+    public function queueTimeout($result)
+    {
+        //-- Notification
+
     }
 
 }

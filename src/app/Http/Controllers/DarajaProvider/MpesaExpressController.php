@@ -41,9 +41,9 @@ class MpesaExpressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function stkPush(Request $request)
     {
-        //
+        $this->transactionService->transaction($request);
     }
 
     /**

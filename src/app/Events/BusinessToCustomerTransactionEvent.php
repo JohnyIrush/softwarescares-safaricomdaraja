@@ -10,7 +10,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TransactionEvent
+class BusinessToCustomerTransactionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -25,6 +25,7 @@ class TransactionEvent
     {
         $this->result = $result;
     }
+
 
     /**
      * Get the channels the event should broadcast on.

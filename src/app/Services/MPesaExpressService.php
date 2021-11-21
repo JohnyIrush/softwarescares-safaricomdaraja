@@ -5,7 +5,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
-use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
 class MPesaExpressService extends Transaction implements TransactionInterface
@@ -23,7 +23,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function transaction()
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
         $body = [
             'BusinessShortCode' => env("MPESA_SHORTCODE"),
@@ -35,7 +35,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'PartyB' => env("MPESA_SHORTCODE"),
             'PhoneNumber' => $this->request->phone,
             'CallBackURL' => env("MPESA_APP_DOMAIN_URL") . '/mpesaexpress/result',
-            'AccountReference' => "SoftwaresCares",
+            'AccountReference' => env("APP_NAME"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
@@ -62,7 +62,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
             // Fire an event to Update Transaction Table 
 
-            event(new TransactionEvent($result));
+            event(new MPesaExpressTransactionEvent($result));
         }
         else
         {
@@ -72,7 +72,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function mpesaExpressQuery($CheckoutRequestID)
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/stkpushquery/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpushquery/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
         $body = [
             "BusinessShortCode" => env("MPESA_SHORTCODE"),
             "Password" => $this->darajaPasswordGenerator(),

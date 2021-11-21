@@ -2,10 +2,11 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Listeners;
 
+use App\Models\MpesaExpressTransaction;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
-use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Services\MPesaExpressService;
 
 class TransactionEventListener
@@ -26,12 +27,12 @@ class TransactionEventListener
      * @param  object  $event
      * @return void
      */
-    public function handle(TransactionEvent $event)
+    public function handle(MPesaExpressTransactionEvent $event)
     {
         //-- Fire Notification
 
         //-- Store the transaction in database
-        DB::insert(
+        MpesaExpressTransaction::create(
             ["body" => serialize($event)]
         );
 

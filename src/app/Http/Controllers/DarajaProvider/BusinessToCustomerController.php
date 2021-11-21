@@ -5,6 +5,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 
 class BusinessToCustomerController extends Controller
 {
@@ -29,9 +30,9 @@ class BusinessToCustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function businessToCustomer(Request $request)
     {
-        //
+        $this->transactionService->transaction($request->all());
     }
 
     /**
@@ -43,6 +44,12 @@ class BusinessToCustomerController extends Controller
     public function result(Request $request)
     {
         $this->transactionService->result($request->all());
+    }
+
+
+    public function queueTimeOutURL(Request $request, BusinessToCustomerservice $service)
+    {
+        $service->queueTimeout($request->all());
     }
 
     /**

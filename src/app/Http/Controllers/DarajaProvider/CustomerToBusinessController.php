@@ -4,13 +4,13 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
 
 class CustomerToBusinessController extends Controller
 {
     private $transactionService;
 
-    public function __construct(TransactionInterface $transactionService)
+    public function __construct(CustomerToBusinessService $transactionService)
     {
         $this->transactionService = $transactionService;
     }
@@ -34,16 +34,36 @@ class CustomerToBusinessController extends Controller
         //
     }
 
+    //-- Initiate c2B Transaction request
+
+    public function customerToBusiness(Request $request)
+    {
+        $this->transactionService->transaction($request->all());
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function result(Request $request)
+    public function validation(Request $request)
     {
-        $this->transactionService->result($request->all());
+        return $this->transactionService->validation($request->all());
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmation(Request $request)
+    {
+        $this->transactionService->confirmation($request->all());
+    }
+
 
     /**
      * Display the specified resource.

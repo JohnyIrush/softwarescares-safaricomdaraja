@@ -9,8 +9,12 @@ use App\Http\Controllers\MpesaExpressController;
 use App\Http\Controllers\TransactionReversalController;
 use Illuminate\Support\ServiceProvider;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
-use Softwarescares\Safaricomdaraja\app\Events\TransactionEvent;
-use Softwarescares\Safaricomdaraja\app\Listeners\TransactionEventListener;
+use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Listeners\MPesaExpressTransactionEventListener;
+use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Listeners\CustomerToBusinessTransactionEventListener;
+use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomeTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Listeners\BusinessToCustomeTransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Services\AccountBalanceService;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
@@ -26,8 +30,14 @@ class DarajaTransactionProvider extends ServiceProvider
     * @var array
     */
     protected $listen = [
-     TransactionEvent::class => [
-          TransactionEventListener::class,
+     MPesaExpressTransactionEvent::class => [
+          MPesaExpressTransactionEventListener::class,
+         ],
+     CustomerToBusinessTransactionEvent::class => [
+      CustomerToBusinessTransactionEventListener::class,
+     ],
+     BusinessToCustomerTransactionEvent::class => [
+          BusinessToCustomerTransactionEventListener::class,
          ],
      ];
 
