@@ -2,14 +2,14 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Listeners;
 
-use App\Models\MpesaExpressTransaction;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Models\MpesaExpressTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\MPesaExpressService;
 
-class TransactionEventListener
+class MPesaExpressTransactionEventListener
 {
     /**
      * Create the event listener.
