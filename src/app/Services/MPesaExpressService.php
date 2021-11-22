@@ -41,17 +41,19 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
         //dd($body);
         $response = json_decode($this->serviceRequest($url, $body));
-        dd($response);
+        //dd($response);
         if($response && $response->ResponseCode === "0")
         {
             // Fire Notification
             // dd($response);
+            LOG::info("STK Response success");
 
         }
         else
         {
             // Fire Notification
             // dd($response);
+            LOG::info("STK Response Error");
         }
     }
 
@@ -62,7 +64,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
             // Fire Notification
-             LOG::info("STK Error");
+             LOG::info("STK Result Success");
              LOG::info($result);
             // Fire an event to Update Transaction Table 
 
