@@ -39,7 +39,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
-        //dd($body);
+        dd($body);
         $response = json_decode($this->serviceRequest($url, $body));
         print_r($response);
         if($response && $response->ResponseCode === "0")
