@@ -45,13 +45,13 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         if($response && $response->ResponseCode === "0")
         {
             // Fire Notification
-            dd($response);
+            // dd($response);
 
         }
         else
         {
             // Fire Notification
-            dd($response);
+            // dd($response);
         }
     }
 
@@ -62,7 +62,8 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
             // Fire Notification
-
+             LOG::info("STK Error");
+             LOG::info($result);
             // Fire an event to Update Transaction Table 
 
             event(new MPesaExpressTransactionEvent($result));
