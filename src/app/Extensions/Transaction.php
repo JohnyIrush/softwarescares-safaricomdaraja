@@ -24,8 +24,6 @@ class Transaction
 
         # curl_close($curl);
         
-        dd(curl_exec($curl));
-        
-        return json_encode(curl_exec($curl));
+        return curl_exec($curl);
     }
 }
