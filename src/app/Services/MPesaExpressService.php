@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
@@ -69,6 +70,8 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         else
         {
             // Fire Notification
+            LOG::info("STK Error");
+            LOG::info($result);
         }
     }
 
