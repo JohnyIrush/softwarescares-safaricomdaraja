@@ -34,12 +34,12 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'PartyA' => $request["Phone"],
             'PartyB' => env("MPESA_BUSINESSSHORTCODE"),
             'PhoneNumber' => $request["Phone"],
-            'CallBackURL' => env("MPESA_APP_DOMAIN_URL") . '/api/mpesaexpress/result',
+            'CallBackURL' => env("MPESA_APP_DOMAIN_URL") . '/mpesaexpress/result',
             'AccountReference' => env("APP_NAME"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
-        dd($body);
+        print_r($body);
         $response = json_decode($this->serviceRequest($url, $body));
         print_r($response);
         if($response && $response->ResponseCode === "0")

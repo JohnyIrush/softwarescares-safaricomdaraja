@@ -7,6 +7,8 @@ use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\BusinessT
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\CustomerToBusinessController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\MpesaExpressController;
 
+use Illuminate\Http\Request;
+
 Route::post("mpesaexpress/result",[MpesaExpressController::class, "result"]);
 
 Route::post("customertobusiness/validation",[CustomerToBusinessController::class, "validation"]);
