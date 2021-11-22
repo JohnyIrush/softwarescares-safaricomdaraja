@@ -45,6 +45,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         if($response && $response->ResponseCode === "0")
         {
             // Fire Notification
+            
             // dd($response);
             LOG::info("STK Response success");
 

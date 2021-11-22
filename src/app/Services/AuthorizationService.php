@@ -40,7 +40,7 @@ trait AuthorizationService
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_RETURNTRANSFER => true
         ]);
-        
+        print_r($curl);
         return json_decode(curl_exec($curl))->access_token;
     }
 }
