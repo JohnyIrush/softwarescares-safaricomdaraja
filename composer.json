@@ -16,6 +16,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "beyondcode/laravel-websockets": "^1.12",
+        "pusher/pusher-php-server": "4.1.1",
+        "guzzlehttp/guzzle": "^7.0.1"
     },
     "extra": {
         "laravel": {
