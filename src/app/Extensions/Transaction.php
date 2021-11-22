@@ -4,8 +4,9 @@ namespace Softwarescares\Safaricomdaraja\app\Extensions;
 
 use Softwarescares\Safaricomdaraja\app\Services\AuthorizationService;
 
-class Transaction extends AuthorizationService
+class Transaction
 {
+    use AuthorizationService;
     /*** make all the http request ***/
     public function serviceRequest($url, $body)
     {
@@ -21,7 +22,7 @@ class Transaction extends AuthorizationService
         ]);
 
 
-        curl_close($curl);
+        # curl_close($curl);
         
         return json_encode(curl_exec($curl));
     }

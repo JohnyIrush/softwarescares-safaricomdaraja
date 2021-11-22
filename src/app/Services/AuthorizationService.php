@@ -5,7 +5,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
-class AuthorizationService
+trait AuthorizationService
 {
     public function constructor()
     {
@@ -21,7 +21,7 @@ class AuthorizationService
      */
     public function darajaPasswordGenerator()
     {
-        return base64_encode(env('MPESA_SHORTCODE') // Business Short Code
+        return base64_encode(env('MPESA_BUSINESSSHORTCODE') // Business Short Code
                             .env("MPESA_PASSEKEY") // daraja api pass key
                             .Carbon::rawParse('now')->format('YmdHms')); // timestamp
     }
@@ -30,8 +30,7 @@ class AuthorizationService
     public function darajaAccessTokenGenerator()
     {
 
-        $url = App::environment('production')? "https://live.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
-
+        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
         $curl = curl_init();
         curl_setopt_array($curl,
         [
@@ -41,8 +40,6 @@ class AuthorizationService
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_RETURNTRANSFER => true
         ]);
-
-        curl_close($curl);
         
         return json_decode(curl_exec($curl))->access_token;
     }

@@ -2,11 +2,11 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Providers;
 
-use App\Http\Controllers\AccountBalanceController;
-use App\Http\Controllers\BusinessToCustomerController;
-use App\Http\Controllers\CustomerToBusinessController;
-use App\Http\Controllers\MpesaExpressController;
-use App\Http\Controllers\TransactionReversalController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\AccountBalanceController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\BusinessToCustomerController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\CustomerToBusinessController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\MpesaExpressController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\TransactionReversalController;
 use Illuminate\Support\ServiceProvider;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
@@ -81,6 +81,6 @@ class DarajaTransactionProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        
     }
 }

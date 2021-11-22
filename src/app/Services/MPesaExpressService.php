@@ -12,43 +12,45 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 {
     use AuthorizationService;
 
-    private $request;
-
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
+        
     }
 
     //-- stk push transaction
 
-    public function transaction()
+    public function transaction($request)
     {
         $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
+        //dd($request["Amount"]);
         $body = [
-            'BusinessShortCode' => env("MPESA_SHORTCODE"),
+            'BusinessShortCode' => env("MPESA_BUSINESSSHORTCODE"),
             'Password' => $this->darajaPasswordGenerator(),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => $this->request->amount,
-            'PartyA' => $this->request->phone,
-            'PartyB' => env("MPESA_SHORTCODE"),
-            'PhoneNumber' => $this->request->phone,
+            'Amount' => $request["Amount"],
+            'PartyA' => $request["Phone"],
+            'PartyB' => env("MPESA_BUSINESSSHORTCODE"),
+            'PhoneNumber' => $request["Phone"],
             'CallBackURL' => env("MPESA_APP_DOMAIN_URL") . '/mpesaexpress/result',
             'AccountReference' => env("APP_NAME"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
+        // dd($body);
         $response = json_decode($this->serviceRequest($url, $body));
-
-        if($response->ResponseCode === "0")
+        //dd($response);
+        if($response && $response->ResponseCode === "0")
         {
             // Fire Notification
+            dd($response);
 
         }
         else
         {
             // Fire Notification
+            dd($response);
         }
     }
 

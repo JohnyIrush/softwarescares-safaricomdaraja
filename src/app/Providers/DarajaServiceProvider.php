@@ -13,7 +13,6 @@ class DarajaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
     }
 
     /**
@@ -23,6 +22,8 @@ class DarajaServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+         
+        
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php'); //-- web routes
         $this->loadRoutesFrom(__DIR__.'/../../routes/api.php'); //-- api routes
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'safaricomdaraja'); //-- Package views

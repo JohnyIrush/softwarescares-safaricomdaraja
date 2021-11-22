@@ -2,14 +2,14 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
-use App\Http\Controllers\Controller;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 
 class MpesaExpressController extends Controller
 {
 
-    private $transactionService;
+    protected $transactionService;
 
     public function __construct(TransactionInterface $transactionService)
     {
@@ -32,7 +32,7 @@ class MpesaExpressController extends Controller
      */
     public function create()
     {
-        return view("safaricomdaraja::forms.mpesa-express-form");
+        return view("safaricomdaraja::components.forms.mpesa-express-form");
     }
 
     /**
@@ -41,9 +41,9 @@ class MpesaExpressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function stkPush(Request $request)
+    public function mpesaExpress(Request $request)
     {
-        $this->transactionService->transaction($request);
+        $this->transactionService->transaction($request->all());
     }
 
     /**

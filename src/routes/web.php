@@ -11,7 +11,7 @@ Route::get('/safaricomdaraja', function(){
 
 });
 
-Route::post("stk-push", [MpesaExpressController::class, "stkPush"]); //Initiate sstk push transaction request
+Route::post("mpesa-express", [MpesaExpressController::class, "mpesaExpress"])->name("mpesaexpress"); //Initiate sstk push transaction request
 Route::post("customer-to-business", [MpesaExpressController::class, "customerToBusiness"]); //Initiate Customer To Business transaction request
 Route::post("business-to-customer", [MpesaExpressController::class, "businessToCustomer"]); //Initiate Business To Customer transaction request
 
