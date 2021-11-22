@@ -41,7 +41,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
         //dd($body);
         $response = json_decode($this->serviceRequest($url, $body));
-        ($response);
+        dd($response);
         if($response && $response["ResponseCode"] === "0")
         {
             // Fire Notification
