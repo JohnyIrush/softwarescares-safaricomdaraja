@@ -30,9 +30,10 @@ class TransactionStatusNotificationEventlistener
      */
     public function handle(TransactionStatusNotificationEvent $event)
     {
+        # dd($event->error["user"]);
         Log::info("EventListener");
         Log::info(json_encode($event));
 
-     Notification::send($event->user, new TransactionFailedNotification($event));
+     Notification::send($event->error["user"], new TransactionFailedNotification($event));
     }
 }

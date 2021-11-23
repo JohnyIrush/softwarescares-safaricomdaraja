@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\MpesaExpressTransactionAcceptedEvent;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
@@ -42,25 +43,26 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
         print_r($body);
         $response = json_decode($this->serviceRequest($url, $body));
-        print_r($response);
-        if(isset($response->ResponseCode) == true && $response->ResponseCode === "0")
+        if(isset($response->ResponseCode) !== true /*&& $response->ResponseCode !== "0"*/)
         {
-            // Fire Notification
-            
-            // dd($response);
             LOG::info("STK Response success");
+            // Fire Notification
+            event(new  MpesaExpressTransactionAcceptedEvent ([
+                'error' => ['errorMessage' => 'success!'],//$response,
+                'user' => $user
+            ]));
 
         }
         else
         {
+            LOG::info("STK Response Error");
+
             // Fire Notification
             event(new  TransactionStatusNotificationEvent ([
-                'error' => $response,
+                'error' => ['errorMessage' => 'ERROR!'],//$response,
                 'user' => $user
             ]));
-            // dd($response);
-            LOG::info("STK Response Error");
-            LOG::info(json_encode($response));
+
         }
     }
 

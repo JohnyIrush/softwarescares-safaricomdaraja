@@ -3,12 +3,24 @@
 @section('content')
 @if(1 == 1)
     @forelse($notifications as $notification)
-        <div class="alert alert-danger" role="alert">
-             {{ $notification->errorMessage }}.
-            <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+         
+          @if ( isset(($notification->data)["errorMessage"]) == true)
+          <div class="alert alert-danger" role="alert">
+              {{ ($notification->data)["errorMessage"] }}
+              <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
                 Mark as read
+              </a>
+          </div>
+          @endif
+        
+          @if (isset(($notification->data)["CustomerMessage"]) == true )
+          <div class="alert alert-success" role="alert">
+          {{ ($notification->data)["CustomerMessage"] }}.
+            <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+              Mark as read
             </a>
-        </div>
+          </div>
+          @endif
 
         @if($loop->last)
             <a href="#" id="mark-all">

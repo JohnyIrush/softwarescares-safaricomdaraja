@@ -27,5 +27,12 @@ class DarajaServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php'); //-- web routes
         $this->loadRoutesFrom(__DIR__.'/../../routes/api.php'); //-- api routes
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'safaricomdaraja'); //-- Package views
+        $this->loadMigrationsFrom(__DIR__.'/../../database/migrations'); //-- migrations
+
+        $this->publishes([
+            __DIR__.'/../../resources/js' => public_path('../resources/js'),
+        ], 'safaricomdaraja-components');
+
+        
     }
 }

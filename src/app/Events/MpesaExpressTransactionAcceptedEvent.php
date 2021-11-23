@@ -11,22 +11,23 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class TransactionStatusNotificationEvent
+class MpesaExpressTransactionAcceptedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $error;
+    public $success;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($error)
+    public function __construct($success)
     {
-        Log::info("Event Fired");
-        Log::info(json_encode($error));
-        $this->error = $error;
+        Log::info("MpesaExpressTransactionAcceptedEvent");
+        Log::info(json_encode($success));
+
+        $this->success = $success;
     }
 
     /**

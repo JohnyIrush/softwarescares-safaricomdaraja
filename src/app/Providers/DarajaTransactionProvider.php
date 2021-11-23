@@ -26,26 +26,7 @@ use Softwarescares\Safaricomdaraja\app\Services\TransactionReversalService;
 class DarajaTransactionProvider extends ServiceProvider
 {
 
-    /**
-    * The event listener mappings for the application.
-    *
-    * @var array
-    */
-    protected $listen = [
-     MPesaExpressTransactionEvent::class => [
-          MPesaExpressTransactionEventListener::class,
-         ],
-     CustomerToBusinessTransactionEvent::class => [
-      CustomerToBusinessTransactionEventListener::class,
-     ],
-     BusinessToCustomerTransactionEvent::class => [
-          BusinessToCustomerTransactionEventListener::class,
-         ],
 
-     TransactionStatusNotificationEvent::class => [
-      TransactionStatusNotificationEventlistener::class,
-     ],
-     ];
 
     /**
      * Register services.

@@ -58,11 +58,12 @@ class TransactionFailedNotification extends Notification
      */
     public function toArray($notifiable)
     {
+        # dd($this->error->error["error"]["errorMessage"]);
         Log::info("Notification Fired");
         return [
-            'requestId' => $this->error->error->requestId,
-            'errorCode' => $this->error->error->errorCode,
-            'errorMessage' => $this->error->error->errorMessage
+            # 'requestId' => $this->error["error"]["requestId"],
+            # 'errorCode' => $this->error["error"]["errorCode"],
+            'errorMessage' => $this->error->error["error"]["errorMessage"]
         ];
     }
 }
