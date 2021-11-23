@@ -1,6 +1,24 @@
 @extends('safaricomdaraja::layouts.app')
 
 @section('content')
+@if(1 == 1)
+    @forelse($notifications as $notification)
+        <div class="alert alert-danger" role="alert">
+             {{ $notification->errorMessage }}.
+            <a href="#" class="float-right mark-as-read" data-id="{{ $notification->id }}">
+                Mark as read
+            </a>
+        </div>
+
+        @if($loop->last)
+            <a href="#" id="mark-all">
+                Mark all as read
+            </a>
+        @endif
+    @empty
+        There are no new notifications
+    @endforelse
+@endif
 <div class="row">
   <div class="col-sm-4 mx-auto">
      <div class="card">

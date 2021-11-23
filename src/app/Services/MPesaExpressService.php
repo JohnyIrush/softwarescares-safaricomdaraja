@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
 class MPesaExpressService extends Transaction implements TransactionInterface
@@ -20,7 +21,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     //-- stk push transaction
 
-    public function transaction($request)
+    public function transaction($request, $user)
     {
         $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
@@ -42,7 +43,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         print_r($body);
         $response = json_decode($this->serviceRequest($url, $body));
         print_r($response);
-        if($response && $response->ResponseCode === "0")
+        if(isset($response->ResponseCode) == true && $response->ResponseCode === "0")
         {
             // Fire Notification
             
@@ -53,8 +54,13 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         else
         {
             // Fire Notification
+            event(new  TransactionStatusNotificationEvent ([
+                'error' => $response,
+                'user' => $user
+            ]));
             // dd($response);
             LOG::info("STK Response Error");
+            LOG::info(json_encode($response));
         }
     }
 

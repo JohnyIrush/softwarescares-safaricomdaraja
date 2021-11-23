@@ -40,7 +40,8 @@ trait AuthorizationService
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_RETURNTRANSFER => true
         ]);
-        print_r(base64_encode(env("MPESA_CONSUMER_KEY").":".env("MPESA_CONSUMER_SECRET")));
-        return json_decode(curl_exec($curl))->access_token;
+        # print_r(base64_encode(env("MPESA_CONSUMER_KEY").":".env("MPESA_CONSUMER_SECRET")));
+        # dd(isset(json_decode(curl_exec($curl))->access_token) == true);
+        return isset(json_decode(curl_exec($curl))->access_token) == true? json_decode(curl_exec($curl))->access_token : "";
     }
 }

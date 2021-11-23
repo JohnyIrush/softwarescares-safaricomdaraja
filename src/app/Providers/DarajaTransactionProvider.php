@@ -14,7 +14,9 @@ use Softwarescares\Safaricomdaraja\app\Listeners\MPesaExpressTransactionEventLis
 use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Listeners\CustomerToBusinessTransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomeTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Listeners\BusinessToCustomeTransactionEventListener;
+use Softwarescares\Safaricomdaraja\app\Listeners\TransactionStatusNotificationEventlistener;
 use Softwarescares\Safaricomdaraja\app\Services\AccountBalanceService;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
@@ -39,6 +41,10 @@ class DarajaTransactionProvider extends ServiceProvider
      BusinessToCustomerTransactionEvent::class => [
           BusinessToCustomerTransactionEventListener::class,
          ],
+
+     TransactionStatusNotificationEvent::class => [
+      TransactionStatusNotificationEventlistener::class,
+     ],
      ];
 
     /**
