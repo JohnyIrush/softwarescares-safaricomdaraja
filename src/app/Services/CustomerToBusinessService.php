@@ -27,7 +27,7 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
         $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/c2b/v1/simulate" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate";
 
         $body = [
-            "CommandID" =>  config("safaricomdaraja.MPESA.COMMANDID"),
+            "CommandID" =>  "CustomerPayBillOnline",//config("safaricomdaraja.MPESA.COMMANDID"),
             "Amount" => $request["Amount"],
             "Msisdn" => $request["Phone"],
             "BillRefNumber" => $request["Account"],
