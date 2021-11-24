@@ -9,7 +9,7 @@ $('#business-to-customer-form').on('submit',function(e){
 
     
     $.ajax({
-      url: "/mpesa-express",
+      url: "/business-to-customer",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),

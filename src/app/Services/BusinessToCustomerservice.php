@@ -24,13 +24,13 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "InitiatorName" => config("safaricomdaraja.app.name"),
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "BusinessPayment",
-            "Amount" => $request->amount,
+            "Amount" => $request["amount"],
             "PartyA" => config("safaricomdaraja.MPESA.SHORTCODE"),
-            "PartyB" => $request->phone,
-            "Remarks" => "",
+            "PartyB" => $request["phone"],
+            "Remarks" => "lipa Na Mpesa",
             "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
             "ResultURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/result",
-            "Occassion" => "" 
+            "Occassion" => "Business To Customers" 
         ];
 
         return $this->serviceRequest($url, $body);

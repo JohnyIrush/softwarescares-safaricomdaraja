@@ -28,9 +28,9 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
 
         $body = [
             "CommandID" =>  config("safaricomdaraja.MPESA.COMMANDID"),
-            "Amount" => $request->amount,
-            "Msisdn" => $request->phone,
-            "BillRefNumber" => $request->account,
+            "Amount" => $request["Amount"],
+            "Msisdn" => $request["Phone"],
+            "BillRefNumber" => $request["Account"],
             "ShortCode" => config("safaricomdaraja.MPESA.SHORTCODE")
         ];
 
