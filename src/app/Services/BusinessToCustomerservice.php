@@ -21,18 +21,19 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
         $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
 
         $body = [
-            "InitiatorName" => config("safaricomdaraja.app.name"),
+            "InitiatorName" => 'testapi',//config("safaricomdaraja.app.name"),
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "BusinessPayment",
             "Amount" => $request["Amount"],
-            "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
-            "PartyB" => $request["Phone"],
-            "Remarks" => "lipa Na Mpesa",
+            "PartyA" => 600996,//config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
+            "PartyB" => 254748607169,//$request["Phone"],
+            "Remar ks" => "lipa Na Mpesa",
             "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
             "ResultURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/result",
             "Occassion" => "Business To Customers" 
         ];
 
+        print_r($body);
         return $this->serviceRequest($url, $body);
     }
 
