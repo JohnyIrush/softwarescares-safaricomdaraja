@@ -10,7 +10,7 @@ return array(
         "BUSINESSSHORTCODE" => "174379",
         "SHORTCODE" => "",
         "PASSEKEY" => "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
-        "APP_DOMAIN_URL" =>"https://4c63-197-156-190-182.ngrok.io",
+        "APP_DOMAIN_URL" =>"https://packageengine.softwarescares.com",
         "COMMANDID" => "",
 
     ),
