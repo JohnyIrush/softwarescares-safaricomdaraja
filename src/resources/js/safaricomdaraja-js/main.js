@@ -28,7 +28,7 @@ $('#mpesa-express-form').on('submit',function(e){
           }
           else // case where transaction is not accepted for processing
           {
-          message = response.data.CustomerMessage;
+          message = response.data.errorMessage;
           ICON = "error";
           console.log(response);
           }
