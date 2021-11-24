@@ -1,5 +1,5 @@
 
-alert("changes1");
+alert("changes2");
 $('#business-to-customer-form').on('submit',function(e){
     alert("submitted");
     e.preventDefault();
@@ -19,6 +19,7 @@ $('#business-to-customer-form').on('submit',function(e){
       success: function(response){
           var message = "";
           var ICON = "";
+          console.log(response);
           response = (JSON.parse(response));
 
          if(response.ResponseCode == "0")
