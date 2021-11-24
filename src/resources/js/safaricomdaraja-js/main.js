@@ -1,5 +1,5 @@
 
-alert("changes7");
+alert("changes8");
 $('#mpesa-express-form').on('submit',function(e){
     alert("submitted");
     e.preventDefault();
