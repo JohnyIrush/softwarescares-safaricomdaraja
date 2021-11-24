@@ -25,7 +25,7 @@ $('#customer-to-business-form').on('submit',function(e){
          if(response.ResponseCode == "0")
          {
           console.log(response);
-          message = response.CustomerMessage;
+          message = response.ResponseDescription;
           ICON = "success";
          }
          else 
