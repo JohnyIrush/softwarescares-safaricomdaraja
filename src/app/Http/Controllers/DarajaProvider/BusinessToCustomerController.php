@@ -15,6 +15,11 @@ class BusinessToCustomerController extends Controller
     {
         $this->transactionService = $transactionService;
     }
+
+    public function create()
+    {
+        return view("safaricomdaraja::components.forms.business-to-customer-form");
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,7 +48,7 @@ class BusinessToCustomerController extends Controller
      */
     public function result(Request $request)
     {
-        $this->transactionService->result($request->all());
+        return $this->transactionService->result($request->all());
     }
 
 

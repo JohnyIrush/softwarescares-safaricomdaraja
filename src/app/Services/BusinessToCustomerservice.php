@@ -3,6 +3,7 @@
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
@@ -11,37 +12,35 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
 {
     use AuthorizationService;
 
-    private $request;
-
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
     }
 
-    public function transaction()
+    public function transaction($request)
     {
-        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
 
         $body = [
-            "InitiatorName" => env("APP_NAME"),
+            "InitiatorName" => config("safaricomdaraja.app.name"),
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "BusinessPayment",
-            "Amount" => $this->request->amount,
-            "PartyA" => env("MPESA_SHORTCODE"),
-            "PartyB" => $this->request->phone,
+            "Amount" => $request->amount,
+            "PartyA" => config("safaricomdaraja.MPESA.SHORTCODE"),
+            "PartyB" => $request->phone,
             "Remarks" => "",
-            "QueueTimeOutURL" => env("MPESA_APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
-            "ResultURL" => env("MPESA_APP_DOMAIN_URL") . "/businesstocustomer/result",
+            "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
+            "ResultURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/result",
             "Occassion" => "" 
         ];
 
-        return json_encode($this->serviceRequest($url, $body));
+        return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/
 
     public function result($result)
     {
+        Log::info("B2C results hit");
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
             // Fire Notification

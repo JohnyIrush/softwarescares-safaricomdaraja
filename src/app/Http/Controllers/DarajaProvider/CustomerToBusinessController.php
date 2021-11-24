@@ -31,14 +31,14 @@ class CustomerToBusinessController extends Controller
      */
     public function create()
     {
-        //
+        return view("safaricomdaraja::components.forms.customer-to-business-form");
     }
 
     //-- Initiate c2B Transaction request
 
     public function customerToBusiness(Request $request)
     {
-        $this->transactionService->transaction($request->all());
+        return $this->transactionService->transaction($request->all());
     }
 
 
@@ -50,7 +50,7 @@ class CustomerToBusinessController extends Controller
      */
     public function validation(Request $request)
     {
-        return $this->transactionService->validation($request->all());
+        $this->transactionService->validation($request->all());
     }
 
     /**
