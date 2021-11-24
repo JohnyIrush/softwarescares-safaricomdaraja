@@ -22,48 +22,29 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     //-- stk push transaction
 
-    public function transaction($request, $user)
+    public function transaction($request)
     {
-        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
-        //dd($request["Amount"]);
         $body = [
-            'BusinessShortCode' => env("MPESA_BUSINESSSHORTCODE"),
+            'BusinessShortCode' => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             'Password' => $this->darajaPasswordGenerator(),
             'Timestamp' => Carbon::rawParse('now')->format('YmdHms'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => $request["Amount"],
             'PartyA' => $request["Phone"],
-            'PartyB' => env("MPESA_BUSINESSSHORTCODE"),
+            'PartyB' => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             'PhoneNumber' => $request["Phone"],
-            'CallBackURL' => env("MPESA_APP_DOMAIN_URL") . '/mpesaexpress/result',
-            'AccountReference' => env("APP_NAME"),
+            'CallBackURL' => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . '/mpesaexpress/result',
+            'AccountReference' => config("app.name"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
-        print_r($body);
-        $response = json_decode($this->serviceRequest($url, $body));
-        if(isset($response->ResponseCode) !== true /*&& $response->ResponseCode !== "0"*/)
-        {
-            LOG::info("STK Response success");
-            // Fire Notification
-            event(new  MpesaExpressTransactionAcceptedEvent ([
-                'error' => ['errorMessage' => 'success!'],//$response,
-                'user' => $user
-            ]));
+        Log::info(json_encode($body));
 
-        }
-        else
-        {
-            LOG::info("STK Response Error");
+        Log::info(json_encode($this->serviceRequest($url, $body)));
+        return $this->serviceRequest($url, $body);
 
-            // Fire Notification
-            event(new  TransactionStatusNotificationEvent ([
-                'error' => ['errorMessage' => 'ERROR!'],//$response,
-                'user' => $user
-            ]));
-
-        }
     }
 
     /*** Handle Transaction Response ***/
@@ -73,9 +54,14 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         LOG::info($result);
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
-            // Fire Notification
              LOG::info("STK Result Success");
              LOG::info($result);
+             // Fire Notification
+             event(new  MpesaExpressTransactionAcceptedEvent ([
+                 'error' => ['errorMessage' => 'success!'],//$response,
+                 //'user' => $user
+             ]));
+
             // Fire an event to Update Transaction Table 
 
             event(new MPesaExpressTransactionEvent($result));
@@ -83,6 +69,10 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         else
         {
             // Fire Notification
+            event(new  TransactionStatusNotificationEvent ([
+                'error' => ['errorMessage' => 'ERROR!'],//$response,
+                //user' => $user
+            ]));
             LOG::info("STK Error");
             LOG::info($result);
         }
@@ -90,9 +80,9 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function mpesaExpressQuery($CheckoutRequestID)
     {
-        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpushquery/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
+        $url = (config('safaricomdaraja.MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpushquery/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/stkpushquery/v1/query";
         $body = [
-            "BusinessShortCode" => env("MPESA_SHORTCODE"),
+            "BusinessShortCode" => env("safaricomdaraja.MPESA_SHORTCODE"),
             "Password" => $this->darajaPasswordGenerator(),
             "Timestamp" => Carbon::rawParse('now')->format('YmdHms'),
             "CheckoutRequestID" => $CheckoutRequestID,

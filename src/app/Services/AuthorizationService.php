@@ -21,8 +21,9 @@ trait AuthorizationService
      */
     public function darajaPasswordGenerator()
     {
-        return base64_encode(env('MPESA_BUSINESSSHORTCODE') // Business Short Code
-                            .env("MPESA_PASSEKEY") // daraja api pass key
+        #dd(config('safaricomdaraja.MPESA.BUSINESSSHORTCODE') . " " . config("safaricomdaraja.MPESA.PASSEKEY"));
+        return base64_encode(config('safaricomdaraja.MPESA.BUSINESSSHORTCODE') // Business Short Code
+                            .config("safaricomdaraja.MPESA.PASSEKEY") // daraja api pass key
                             .Carbon::rawParse('now')->format('YmdHms')); // timestamp
     }
 
@@ -30,18 +31,19 @@ trait AuthorizationService
     public function darajaAccessTokenGenerator()
     {
 
-        $url = (env('MPESA_ENV') === "production") ? "https://live.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+        //dd( base64_encode( config("safaricomdaraja.MPESA.CONSUMER_KEY").":".config("safaricomdaraja.MPESA.CONSUMER_SECRET")) );
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
         $curl = curl_init();
         curl_setopt_array($curl,
         [
             CURLOPT_URL => $url,
-            CURLOPT_HTTPHEADER => array("Authorization: Basic ".base64_encode(env("MPESA_CONSUMER_KEY").":".env("MPESA_CONSUMER_SECRET"))),
+            CURLOPT_HTTPHEADER => array("Authorization: Basic ".base64_encode(config("safaricomdaraja.MPESA.CONSUMER_KEY").":".config("safaricomdaraja.MPESA.CONSUMER_SECRET"))),
             CURLOPT_HEADER =>false,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_RETURNTRANSFER => true
         ]);
         # print_r(base64_encode(env("MPESA_CONSUMER_KEY").":".env("MPESA_CONSUMER_SECRET")));
-        # dd(isset(json_decode(curl_exec($curl))->access_token) == true);
+        # dd((json_decode(curl_exec($curl))->access_token));
         return isset(json_decode(curl_exec($curl))->access_token) == true? json_decode(curl_exec($curl))->access_token : "";
     }
 }

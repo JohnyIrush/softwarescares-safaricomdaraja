@@ -30,9 +30,16 @@ class DarajaServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations'); //-- migrations
 
         $this->publishes([
-            __DIR__.'/../../resources/js' => public_path('../resources/js'),
-        ], 'safaricomdaraja-components');
+            __DIR__.'/../../resources/js/safaricomdaraja-js' => public_path('/safaricomdaraja-js'),
+        ], 'safaricomdaraja-js');
 
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/safaricomdaraja.php', 'safaricomdaraja'
+        );
+
+        $this->publishes([
+            __DIR__.'/../../config/safaricomdaraja.php' => config_path('safaricomdaraja.php'),
+        ],'safaricomdaraja-config');
         
     }
 }
