@@ -36,8 +36,7 @@ class MpesaExpressController extends Controller
      */
     public function create()
     {
-        $notifications = Auth::user()->unreadNotifications;
-        return view("safaricomdaraja::components.forms.mpesa-express-form", compact('notifications'));
+        return view("safaricomdaraja::components.forms.mpesa-express-form"));
     }
 
     /**
