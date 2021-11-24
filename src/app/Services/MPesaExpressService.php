@@ -51,8 +51,8 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function result($result)
     {
-        LOG::info("Result Hit!");
-        LOG::info($result);
+        Log::info("Result Hit!");
+        Log::info($result);
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
              LOG::info("STK Result Success");
