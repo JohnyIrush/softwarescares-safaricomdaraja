@@ -1,5 +1,5 @@
 
-alert("changes17");
+alert("changes23");
 $('#mpesa-express-form').on('submit',function(e){
     alert("submitted");
     e.preventDefault();
@@ -19,22 +19,21 @@ $('#mpesa-express-form').on('submit',function(e){
       success: function(response){
           var message = "";
           var ICON = "";
+          response = (JSON.parse(response));
 
-         if(response.ResponseCode == true && response.ResponseCode == "0")
+         if(response.ResponseCode == "0")
          {
-          console.log(typeof response);
+          console.log(response);
           message = response.CustomerMessage;
           ICON = "success";
          }
          else 
          {// case where transaction is not accepted for processing
-         console.log(response.errorMessage);
+    
+         console.log(response);
           message = response.errorMessage;
           ICON = "error";
-          alert(response.errorMessage);
          }
-
-alert(message);
         swal({
            title: "Transaction Status",
            text: message, //response.data.CustomerMessage,
