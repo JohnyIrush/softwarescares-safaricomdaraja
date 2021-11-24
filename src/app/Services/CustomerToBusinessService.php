@@ -31,7 +31,7 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
             "Amount" => $request["Amount"],
             "Msisdn" => $request["Phone"],
             "BillRefNumber" => $request["Account"],
-            "ShortCode" => config("safaricomdaraja.MPESA.SHORTCODE")
+            "ShortCode" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE")
         ];
 
         return $this->serviceRequest($url, $body);
