@@ -42,7 +42,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
         Log::info(json_encode($body));
 
-        Log::info(json_encode($this->serviceRequest($url, $body)));
+        Log::info(($this->serviceRequest($url, $body)));
         return $this->serviceRequest($url, $body);
 
     }
