@@ -36,7 +36,7 @@ class MpesaExpressController extends Controller
      */
     public function create()
     {
-        return view("safaricomdaraja::components.forms.mpesa-express-form"));
+        return view("safaricomdaraja::components.forms.mpesa-express-form");
     }
 
     /**
