@@ -48,7 +48,7 @@ class MpesaExpressController extends Controller
      */
     public function mpesaExpress(Request $request)
     {
-        return response()->json($this->transactionService->transaction($request->all()));
+        return ($this->transactionService->transaction($request->all()));
     }
 
     /**
