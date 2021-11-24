@@ -25,7 +25,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "BusinessPayment",
             "Amount" => $request["Amount"],
-            "PartyA" => config("safaricomdaraja.MPESA.SHORTCODE"),
+            "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "PartyB" => $request["Phone"],
             "Remarks" => "lipa Na Mpesa",
             "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
