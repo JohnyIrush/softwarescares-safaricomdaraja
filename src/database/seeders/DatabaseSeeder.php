@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Softwarescares\Safaricomdaraja\app\Models\BusinessToCustomerTransaction;
+use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,9 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        echo "seded";
         $this->call([
-            MpesaExpressTableSeeder::class
+            MpesaExpressTableSeeder::class,
+            CustomerToBusinessTableSeeder::class,
+            BusinessToCustomerTableSeeder::class
         ]);
     }
 }

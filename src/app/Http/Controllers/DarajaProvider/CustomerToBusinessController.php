@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
 
 class CustomerToBusinessController extends Controller
@@ -65,6 +66,12 @@ class CustomerToBusinessController extends Controller
     }
 
 
+    public function transactions()
+    {
+        return view("safaricomdaraja::components.plugins.customer-to-business-transactions")->with([
+            "c2btransactions" => CustomerToBusinessTransaction::all()
+        ]);
+    }
     /**
      * Display the specified resource.
      *

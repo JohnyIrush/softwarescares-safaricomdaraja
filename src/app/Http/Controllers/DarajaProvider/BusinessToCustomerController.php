@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Models\BusinessToCustomerTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 
 class BusinessToCustomerController extends Controller
@@ -58,6 +59,13 @@ class BusinessToCustomerController extends Controller
     {
         Log::info("B2C timeout HIT!");
         $service->queueTimeout($request->all());
+    }
+
+    public function transactions()
+    {
+        return view("safaricomdaraja::components.plugins.business-to-customer-transactions")->with([
+            "b2ctransactions" => BusinessToCustomerTransaction::all()
+        ]);
     }
 
     /**

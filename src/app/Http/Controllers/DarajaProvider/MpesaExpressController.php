@@ -72,7 +72,7 @@ class MpesaExpressController extends Controller
     public function transactions()
     {
         return view("safaricomdaraja::components.plugins.mpesa-express-transactions")->with([
-            "transactions" => MpesaExpressTransaction::all()
+            "mpesaexpresstransactions" => MpesaExpressTransaction::all()
         ]);
     }
 

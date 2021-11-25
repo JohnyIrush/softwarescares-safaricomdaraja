@@ -15,7 +15,21 @@ class CreateBusinessToCustomerTransactionsTable extends Migration
     {
         Schema::create('business_to_customer_transactions', function (Blueprint $table) {
             $table->id();
-            $table->text("body");
+            $table->text("order_id");  
+            $table->text("ResultType");                     
+            $table->text("ResultCode"); 
+            $table->text("B2CWorkingAccountAvailableFunds")->nullable();          
+            $table->text("ResultDesc");
+            $table->text("OriginatorConversationID");
+            $table->text("ConversationID");
+            $table->text("TransactionID");
+            $table->text("TransactionAmount")->nullable();
+            $table->text("TransactionReceipt")->nullable();
+            $table->text("B2CRecipientIsRegisteredCustomer")->nullable();
+            $table->text("B2CChargesPaidAccountAvailableFunds")->nullable();
+            $table->text("ReceiverPartyPublicName")->nullable();
+            $table->text("TransactionCompletedDateTime")->nullable();
+            $table->text("B2CUtilityAccountAvailableFunds")->nullable();
             $table->timestamps();
         });
     }

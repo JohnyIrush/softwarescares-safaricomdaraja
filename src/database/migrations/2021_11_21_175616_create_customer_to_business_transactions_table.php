@@ -15,6 +15,7 @@ class CreateCustomerToBusinessTransactionsTable extends Migration
     {
         Schema::create('customer_to_business_transactions', function (Blueprint $table) {
             $table->id();
+            $table->string("order_id");
             $table->string("TransactionType");
             $table->string("TransID");
             $table->string("TransTime");

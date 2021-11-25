@@ -14,15 +14,21 @@
                         <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">OrderId</th>
-                                <th class="cell100 column2">MerchantRequestID</th>
-                                <th class="cell100 column3">CheckoutRequestID</th>
+                                <th class="cell100 column2">TransactionType</th>
+                                <th class="cell100 column3">B2CWorkingAccountAvailableFunds</th>
                                 <th class="cell100 column4">ResultCode</th>
                                 <th class="cell100 column5">ResultDesc</th>
-                                <th class="cell100 column6">Amount</th>
-                                <th class="cell100 column7">MpesaReceiptNumber</th>
-                                <th class="cell100 column8">TransactionDate</th>
-                                <th class="cell100 column9">PhoneNumber</th>
-                                <th class="cell100 column10">Actions</th>
+                                <th class="cell100 column6">OriginatorConversationID</th>
+                                <th class="cell100 column7">ConversationID</th>
+                                <th class="cell100 column8">TransactionID</th>
+                                <th class="cell100 column9">TransactionAmount</th>
+                                <th class="cell100 column10">TransactionReceipt</th>
+                                <th class="cell100 column11">B2CRecipientIsRegisteredCustomer</th>
+                                <th class="cell100 column12">B2CChargesPaidAccountAvailableFunds</th>
+                                <th class="cell100 column13">ReceiverPartyPublicName</th>
+                                <th class="cell100 column14">TransactionCompletedDateTime</th>
+                                <th class="cell100 column15">B2CUtilityAccountAvailableFunds</th>
+                                <th class="cell100 column16">Actions</th>
                             </tr>
                         </thead>
                     </table>
@@ -32,19 +38,25 @@
                     <table class="table table-responsive">
                         <tbody>
 
-                        @foreach ($mpesaexpresstransactions as $transaction)
+                        @foreach ($b2ctransactions as $transaction)
                             
                             <tr class="row100 body">
                                 <td class="cell100 column1">{{ $transaction->order_id}}</td>
-                                <td class="cell100 column2">{{ $transaction->MerchantRequestID}}</td>
-                                <td class="cell100 column3">{{ $transaction->CheckoutRequestID}}</td>
+                                <td class="cell100 column2">{{ $transaction->TransactionType}}</td>
+                                <td class="cell100 column3">{{ $transaction->B2CWorkingAccountAvailableFunds}}</td>
                                 <td class="cell100 column4">{{ $transaction->ResultCode}}</td>
                                 <td class="cell100 column5">{{ $transaction->ResultDesc}}</td>
-                                <td class="cell100 column6">{{ $transaction->Amount}}</td>
-                                <td class="cell100 column7">{{ $transaction->MpesaReceiptNumber}}</td>
-                                <td class="cell100 column8">{{  \Carbon\Carbon::parse($transaction->TransactionDate)->format('d/m/Y')}}</td>
-                                <td class="cell100 column9">{{ $transaction->PhoneNumber}}</td>
-                                <td class="cell100 column10">
+                                <td class="cell100 column6">{{ $transaction->OriginatorConversationID}}</td>
+                                <td class="cell100 column7">{{ $transaction->ConversationID}}</td>
+                                <td class="cell100 column8">{{  ($transaction->TransactionID)}}</td>
+                                <td class="cell100 column9">{{ $transaction->TransactionAmount}}</td>
+                                <td class="cell100 column10">{{ $transaction->TransactionReceipt}}</td>
+                                <td class="cell100 column11">{{ $transaction->B2CRecipientIsRegisteredCustomer}}</td>
+                                <td class="cell100 column12">{{ $transaction->B2CChargesPaidAccountAvailableFunds}}</td>
+                                <td class="cell100 column13">{{ $transaction->ReceiverPartyPublicName}}</td>
+                                <td class="cell100 column14">{{ \Carbon\Carbon::parse($transaction->TransactionCompletedDateTime)->format('d/m/Y')}}</td>
+                                <td class="cell100 column15">{{ $transaction->B2CUtilityAccountAvailableFunds}}</td>
+                                <td class="cell100 column16">
                                 <div class="dropdown show">
                                   <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Transaction Actions

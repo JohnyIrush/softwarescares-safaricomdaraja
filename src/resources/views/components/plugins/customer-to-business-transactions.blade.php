@@ -14,15 +14,20 @@
                         <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">OrderId</th>
-                                <th class="cell100 column2">MerchantRequestID</th>
-                                <th class="cell100 column3">CheckoutRequestID</th>
-                                <th class="cell100 column4">ResultCode</th>
-                                <th class="cell100 column5">ResultDesc</th>
-                                <th class="cell100 column6">Amount</th>
-                                <th class="cell100 column7">MpesaReceiptNumber</th>
-                                <th class="cell100 column8">TransactionDate</th>
-                                <th class="cell100 column9">PhoneNumber</th>
-                                <th class="cell100 column10">Actions</th>
+                                <th class="cell100 column2">ransactionType</th>
+                                <th class="cell100 column3">TransID</th>
+                                <th class="cell100 column4">TransTime</th>
+                                <th class="cell100 column5">TransAmount</th>
+                                <th class="cell100 column6">BusinessShortCode</th>
+                                <th class="cell100 column7">BillRefNumber</th>
+                                <th class="cell100 column8">OrgAccountBalance</th>
+                                <th class="cell100 column9">InvoiceNumber</th>
+                                <th class="cell100 column10">ThirdPartyTransID</th>
+                                <th class="cell100 column11">MSISDN</th>
+                                <th class="cell100 column12">FirstName</th>
+                                <th class="cell100 column13">MiddleName</th>
+                                <th class="cell100 column14">LastName</th>
+                                <th class="cell100 column15">Actions</th>
                             </tr>
                         </thead>
                     </table>
@@ -32,19 +37,24 @@
                     <table class="table table-responsive">
                         <tbody>
 
-                        @foreach ($mpesaexpresstransactions as $transaction)
+                        @foreach ($c2btransactions as $transaction)
                             
                             <tr class="row100 body">
                                 <td class="cell100 column1">{{ $transaction->order_id}}</td>
-                                <td class="cell100 column2">{{ $transaction->MerchantRequestID}}</td>
-                                <td class="cell100 column3">{{ $transaction->CheckoutRequestID}}</td>
-                                <td class="cell100 column4">{{ $transaction->ResultCode}}</td>
-                                <td class="cell100 column5">{{ $transaction->ResultDesc}}</td>
-                                <td class="cell100 column6">{{ $transaction->Amount}}</td>
-                                <td class="cell100 column7">{{ $transaction->MpesaReceiptNumber}}</td>
-                                <td class="cell100 column8">{{  \Carbon\Carbon::parse($transaction->TransactionDate)->format('d/m/Y')}}</td>
-                                <td class="cell100 column9">{{ $transaction->PhoneNumber}}</td>
-                                <td class="cell100 column10">
+                                <td class="cell100 column2">{{ $transaction->ransactionType}}</td>
+                                <td class="cell100 column3">{{ $transaction->TransID}}</td>
+                                <td class="cell100 column4">{{ $transaction->TransTime}}</td>
+                                <td class="cell100 column5">{{ $transaction->TransAmount}}</td>
+                                <td class="cell100 column6">{{ $transaction->BusinessShortCode}}</td>
+                                <td class="cell100 column7">{{ $transaction->BillRefNumber}}</td>
+                                <td class="cell100 column8">{{  $transaction->OrgAccountBalance}}</td>
+                                <td class="cell100 column9">{{ $transaction->InvoiceNumber}}</td>
+                                <td class="cell100 column10">{{ $transaction->ThirdPartyTransID}}</td>
+                                <td class="cell100 column11">{{ $transaction->MSISDN}}</td>
+                                <td class="cell100 column12">{{ $transaction->FirstName}}</td>
+                                <td class="cell100 column13">{{ $transaction->MiddleName}}</td>
+                                <td class="cell100 column14">{{ $transaction->LastName}}</td>
+                                <td class="cell100 column15">
                                 <div class="dropdown show">
                                   <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Transaction Actions
