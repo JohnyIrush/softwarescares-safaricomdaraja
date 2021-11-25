@@ -3,6 +3,7 @@
 /*** Daraja web routes ***/
 
 use Illuminate\Support\Facades\Route;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\BusinessToCustomerController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\CustomerToBusinessController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\MpesaExpressController;
@@ -27,3 +28,7 @@ Route::get("businesstocustomer", [BusinessToCustomerController::class, "create"]
 Route::get("mpesa-express-transactions", [MpesaExpressController::class, "transactions"]); // Mpesa express transactions view
 Route::get("customer-to-business-transactions", [CustomerToBusinessController::class, "transactions"]); // Customer to busines transactions view
 Route::get("business-to-customer-transactions", [BusinessToCustomerController::class, "transactions"]); // Business to Customer transactions view
+
+// All transactions
+
+Route::get("all-transactions", [DarajaController::class, "transactions"]); // Business to Customer transactions view

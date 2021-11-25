@@ -6,11 +6,9 @@
     <div class="container-table100">
         <div class="wrap-table100">
 
-
-
             <div class="table100 ver3 m-b-110">
-                <div class="table100-head">
-                    <table>
+                <div class="table100-head table-responsive">
+                    <table class="table table-responsive">
                         <thead>
                             <tr class="row100 head">
                                 <th class="cell100 column1">OrderId</th>
