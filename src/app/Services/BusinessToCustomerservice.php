@@ -33,7 +33,6 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "Occassion" => "Business To Customers" 
         ];
 
-        print_r($body);
         return $this->serviceRequest($url, $body);
     }
 

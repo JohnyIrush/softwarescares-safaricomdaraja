@@ -10,14 +10,12 @@ class AccountBalanceService extends Transaction implements TransactionInterface
 {
     use AuthorizationService;
 
-    private $request;
-
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
+
     }
 
-    public function transaction()
+    public function transaction($request)
     {
         $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/accountbalance/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/accountbalance/v1/query";
 

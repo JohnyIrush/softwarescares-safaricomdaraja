@@ -37,7 +37,7 @@ class BusinessToCustomerController extends Controller
      */
     public function businessToCustomer(Request $request)
     {
-        $this->transactionService->transaction($request->all());
+        return $this->transactionService->transaction($request->all());
     }
 
     /**
