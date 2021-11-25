@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 
@@ -48,12 +49,14 @@ class BusinessToCustomerController extends Controller
      */
     public function result(Request $request)
     {
-        return $this->transactionService->result($request->all());
+        Log::info("B2C Result ENDPOINT HIT!");
+        $this->transactionService->result($request->all());
     }
 
 
     public function queueTimeOutURL(Request $request, BusinessToCustomerservice $service)
     {
+        Log::info("B2C timeout HIT!");
         $service->queueTimeout($request->all());
     }
 

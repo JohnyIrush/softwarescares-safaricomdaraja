@@ -41,6 +41,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
     public function result($result)
     {
         Log::info("B2C results hit");
+        Log::info($result);
         if($result["Body"]["stkCallback"]["ResultCode"] === "0")
         {
             // Fire Notification
