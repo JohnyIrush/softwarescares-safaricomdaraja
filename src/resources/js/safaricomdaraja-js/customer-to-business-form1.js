@@ -1,7 +1,4 @@
-
-alert("c2bchanges2");
 $('#customer-to-business-form').on('submit',function(e){
-    alert("submitted");
     e.preventDefault();
 
     let Amount = $('#Amount').val();

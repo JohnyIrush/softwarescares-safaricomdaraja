@@ -21,3 +21,7 @@ Route::post("business-to-customer", [BusinessToCustomerController::class, "busin
 Route::get("mpesa-express", [MpesaExpressController::class, "create"]); // Render mpesa express view form
 Route::get("customertobusiness", [CustomerToBusinessController::class, "create"]); // Customer to Business view form
 Route::get("businesstocustomer", [BusinessToCustomerController::class, "create"]); // Business to Customer view form
+
+//Transactions 
+
+Route::get("mpesa-express-transactions", [MpesaExpressController::class, "transactions"]); // Mpesa express transactions view form

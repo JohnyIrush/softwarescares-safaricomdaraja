@@ -1,7 +1,5 @@
 
-alert("changes2");
 $('#business-to-customer-form').on('submit',function(e){
-    alert("submitted");
     e.preventDefault();
 
     let Amount = $('#Amount').val();

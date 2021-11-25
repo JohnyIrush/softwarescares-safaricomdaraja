@@ -40,6 +40,14 @@ class DarajaServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/safaricomdaraja.php' => config_path('safaricomdaraja.php'),
         ],'safaricomdaraja-config');
+
+        $this->publishes([
+            __DIR__.'/../../database/seeders' => public_path('../database/seeders'),
+        ],'seeders');
+
+        $this->publishes([
+            __DIR__.'/../../public' => public_path('/'),
+        ],'assets');
         
     }
 }

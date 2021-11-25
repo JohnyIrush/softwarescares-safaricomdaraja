@@ -6,6 +6,7 @@ use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Models\MpesaExpressTransaction;
 
 class MpesaExpressController extends Controller
 {
@@ -68,9 +69,11 @@ class MpesaExpressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function transactions()
     {
-        //
+        return view("safaricomdaraja::components.plugins.mpesa-express-transactions")->with([
+            "transactions" => MpesaExpressTransaction::all()
+        ]);
     }
 
     /**
