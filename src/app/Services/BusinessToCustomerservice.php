@@ -27,7 +27,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "Amount" => $request["Amount"],
             "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "PartyB" => $request["Phone"],
-            "Remar ks" => "lipa Na Mpesa",
+            "Remarks" => "lipa Na Mpesa",
             "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/queue-timeout",
             "ResultURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/businesstocustomer/result",
             "Occassion" => "Business To Customers" 
