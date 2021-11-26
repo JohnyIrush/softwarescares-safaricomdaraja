@@ -3,8 +3,10 @@
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Notification;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Notification\AccountBalanceNotification;
 
 class AccountBalanceService extends Transaction implements TransactionInterface
 {
@@ -24,20 +26,28 @@ class AccountBalanceService extends Transaction implements TransactionInterface
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "InitiatorPassword" => "Safaricom978!",
             "CommandID" => "AccountBalance",
-            "PartyA" => env("MPESA_SHORTCODE"),
+            "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "IdentifierType" => "4",
-            "Remarks" => "AccountBalance",
-            "QueueTimeOutURL" => "https://daraja.softwarescares.com/AccountBalance/queue",
-            "ResultURL" => "https://daraja.softwarescares.com/AccountBalance/result",
+            "Remarks" => "Account Balance",
+            "QueueTimeOutURL" => config('safaricomdaraja.APP_DOMAIN_URL') . "/accountbalance/queue-timeout",
+            "ResultURL" => config('safaricomdaraja.APP_DOMAIN_URL') . "/accountbalance/result",
         ];
 
-        return json_encode($this->serviceRequest($url, $body));
+        return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function result($result, $user)
     {
-        
+        // Fire Notification
+
+        Notification::send($user, new AccountBalanceNotification($result));
     }
+
+    public function queueTimeOutURL($request)
+    {
+
+    }
+
 }

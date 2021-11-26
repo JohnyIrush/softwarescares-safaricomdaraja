@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 
-class TransactionFailedNotification extends Notification
+class AccountBalanceNotification extends Notification
 {
     use Queueable;
 
@@ -59,7 +59,7 @@ class TransactionFailedNotification extends Notification
     public function toArray($notifiable)
     {
         # dd($this->error->error["error"]["errorMessage"]);
-        Log::info("Notification Fired");
+        Log::info("Account Balance Notification Fired");
         return [
             # 'requestId' => $this->error["error"]["requestId"],
             # 'errorCode' => $this->error["error"]["errorCode"],

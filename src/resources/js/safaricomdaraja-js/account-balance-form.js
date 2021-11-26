@@ -1,25 +1,18 @@
-
-$('#business-to-customer-form').on('submit',function(e){
+$('#customer-to-business-form').on('submit',function(e){
     e.preventDefault();
-
-    let Amount = $('#Amount').val();
-    let Phone = $('#Phone').val();
-
     
     $.ajax({
-      url: "/account-balance",
+      url: "/customer-to-business",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),
-        Amount:Amount,
-        Phone:Phone,
       },
       success: function(response){
-          console.log(response);
           response = (JSON.parse(response));
 
-         if(response.ResponseCode == "0")
+         if(response.ConversationID)
          {
+          console.log(response);
           notificationAlert("Transaction Request Status",response.ResponseDescription, "success");
           setTimeout(() => {
             transactionResultNotification();
@@ -27,16 +20,25 @@ $('#business-to-customer-form').on('submit',function(e){
          }
          else 
          {// case where transaction is not accepted for processing
+  
           console.log(response);
           notificationAlert("Transaction Request Status",response.errorMessage, "error");
          }
+        swal({
+           title: "Transaction Status",
+           text: message, //response.data.CustomerMessage,
+           icon: ICON,
+           button: "ok",
+         });
 
       },
       error: function(response) {
-          console.log(response)
+          console.log(response);
       },
       });
     });
+
+
 
 
     function transactionResultNotification()
@@ -75,6 +77,7 @@ $('#business-to-customer-form').on('submit',function(e){
         });
     }
 
+
     function notificationAlert(title,message, ICON)
     {
       swal({
@@ -93,7 +96,7 @@ $('#business-to-customer-form').on('submit',function(e){
           url: "transaction/result/notification/read",
           type:"POST",
           data : {
-            "_token": "{{ csrf_token() }}",
+            '_token': $('meta[name="csrf-token"]').attr('content'),
             id: ID
           },
           success: function(response){

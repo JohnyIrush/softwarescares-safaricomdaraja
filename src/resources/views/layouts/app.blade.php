@@ -20,9 +20,11 @@
 
     <!-- Scripts -->
     <!--script src="{{ asset('js/app.js') }}" defer></script-->
-    <script src="/safaricomdaraja-js/main37.js" defer></script>
+    <script src="/safaricomdaraja-js/mpesa-express-form.js" defer></script>
     <script src="/safaricomdaraja-js/customer-to-business-form3.js" defer></script>
     <script src="/safaricomdaraja-js/business-to-customer-form4.js" defer></script>
+    <script src="/safaricomdaraja-js/account-balance-form.js" defer></script>
+    <script src="/safaricomdaraja-js/transaction-reversal-form.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

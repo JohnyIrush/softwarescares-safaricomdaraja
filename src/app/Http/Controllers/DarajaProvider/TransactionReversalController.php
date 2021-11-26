@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 
 class TransactionReversalController extends Controller
@@ -24,6 +25,11 @@ class TransactionReversalController extends Controller
         //
     }
 
+    public function transaction(Request $request)
+    {
+        return $this->transactionService->transaction($request);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -32,6 +38,11 @@ class TransactionReversalController extends Controller
     public function create()
     {
         //
+    }
+
+    public function result(Request $request)
+    {
+        $this->transactionService->result($request, Auth::user());
     }
 
     /**

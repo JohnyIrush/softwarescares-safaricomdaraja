@@ -3,8 +3,11 @@
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Request;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Notification\TransactionReversalNotification;
 
 class TransactionReversalService extends Transaction implements TransactionInterface
 {
@@ -17,7 +20,7 @@ class TransactionReversalService extends Transaction implements TransactionInter
         $this->request = $request;
     }
 
-    public function transaction()
+    public function transaction($request)
     {
         $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/reversal/v1/request" : "https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request";
 
@@ -25,12 +28,12 @@ class TransactionReversalService extends Transaction implements TransactionInter
             "InitiatorName" => "testapi",
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "TransactionReversal",
-            "TransactionID" => $this->request->transactionid,
+            "TransactionID" => $this->request->TransactionID,
             "Amount" => $this->request->amount,
-            "ReceiverParty" => env("MPESA_SHORTCODE"),
+            "ReceiverParty" => env("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "RecieverIdentifierType" => "11",
-            "QueueTimeOutURL" => "https://daraja.softwarescares.com/reverseTransaction/queue",
-            "ResultURL" => "https://daraja.softwarescares.com/reverseTransaction/result",
+            "QueueTimeOutURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/reversal/queue-timeout",
+            "ResultURL" => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . "/reversal/result",
             "Remarks" => "please",
             "Occasion" => "work"
         ];
@@ -40,8 +43,17 @@ class TransactionReversalService extends Transaction implements TransactionInter
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function result($result, $user)
     {
+        // Fire Notification
+
+        Notification::send($user, new TransactionReversalNotification($result));
         
+        // Fire event to update database
+    }
+
+    public function queueTimeOutURL(Request $request)
+    {
+
     }
 }

@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 
 class AccountBalanceController extends Controller
@@ -12,6 +13,7 @@ class AccountBalanceController extends Controller
 
     public function __construct(TransactionInterface $transactionService)
     {
+        $this->middleware("web");
         $this->transactionService = $transactionService;
     }
     /**
@@ -19,9 +21,9 @@ class AccountBalanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function accountBalance()
     {
-        //
+        return view('safaricomdaraja::components.forms.account-balance-form');
     }
 
     /**
@@ -32,6 +34,16 @@ class AccountBalanceController extends Controller
     public function create()
     {
         //
+    }
+
+    public function transaction(Request $request)
+    {
+        return $this->transactionService->transaction($request);
+    }
+
+    public function result(Request $request)
+    {
+        $this->transactionService->result($request, Auth::user());
     }
 
     /**

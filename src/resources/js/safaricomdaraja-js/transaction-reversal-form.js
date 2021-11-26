@@ -1,5 +1,5 @@
 
-$('#business-to-customer-form').on('submit',function(e){
+$('#transaction-reversal-form').on('submit',function(e){
     e.preventDefault();
 
     let Amount = $('#Amount').val();
@@ -13,6 +13,7 @@ $('#business-to-customer-form').on('submit',function(e){
         '_token': $('meta[name="csrf-token"]').attr('content'),
         Amount:Amount,
         Phone:Phone,
+        TransactionID:transaction-id,
       },
       success: function(response){
           console.log(response);
