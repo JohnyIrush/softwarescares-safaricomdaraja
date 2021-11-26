@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class MpesaExpressTransactionAcceptedEvent
+class TransactionNotificationEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -24,7 +24,7 @@ class MpesaExpressTransactionAcceptedEvent
      */
     public function __construct($success)
     {
-        Log::info("MpesaExpressTransactionAcceptedEvent");
+        Log::info("TransactionNotificationEvent");
         Log::info(json_encode($success));
 
         $this->success = $success;

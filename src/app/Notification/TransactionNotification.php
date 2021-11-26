@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 
-class MpesaExpressTransactionAcceptedNotification extends Notification
+class TransactionNotification extends Notification
 {
     use Queueable;
 
@@ -17,9 +17,10 @@ class MpesaExpressTransactionAcceptedNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public $success;
+    public function __construct($success)
     {
-        //
+        $this->success = $success;
     }
 
     /**
@@ -57,20 +58,10 @@ class MpesaExpressTransactionAcceptedNotification extends Notification
     public function toArray($notifiable)
     {
         Log::info("MpesaExpressTransactionAcceptedNotification");
-
+        Log::info(json_encode($this->success));
         return [
-        /*
-          "MerchantRequestID" =>  $this->success->success["success"]["MerchantRequestID"],    
-          "CheckoutRequestID" =>  $this->success->success["success"]["CheckoutRequestID"],    
-          "ResponseCode" => $this->success->success["success"]["ResponseCode"],    
-          "ResponseDescription" =>  $this->success->success["success"]["ResponseDescription"],    
-          "CustomerMessage" =>  $this->success->success["success"]["CustomerMessage"]
-          */
-          "MerchantRequestID" => "29115-34620561-1",    
-          "CheckoutRequestID" => "ws_CO_191220191020363925",    
-          "ResponseCode" => "0",    
-          "ResponseDescription" => "Success. Request accepted for processing",    
-          "CustomerMessage" => "Success. Request accepted for processing"
+          "ResultDesc" =>  $this->success->success["success"]["ResultDesc"],
+          "ResultCode" =>  $this->success->success["success"]["ResultCode"],    
         ];
     }
 }

@@ -6,5 +6,5 @@ Interface TransactionInterface
 {
     public function transaction($request);
 
-    public function result($result);
+    public function result($result, $user);
 }

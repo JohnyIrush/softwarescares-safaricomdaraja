@@ -20,18 +20,42 @@
 
     <!-- Scripts -->
     <!--script src="{{ asset('js/app.js') }}" defer></script-->
-    <script src="/safaricomdaraja-js/main20.js" defer></script>
-    <script src="/safaricomdaraja-js/customer-to-business-form1.js" defer></script>
-    <script src="/safaricomdaraja-js/business-to-customer-form2.js" defer></script>
+    <script src="/safaricomdaraja-js/main37.js" defer></script>
+    <script src="/safaricomdaraja-js/customer-to-business-form3.js" defer></script>
+    <script src="/safaricomdaraja-js/business-to-customer-form4.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous" defer></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 </head>
 <body>
     <div id="app">
         <main>
             @yield('content')
+            <div id="transaction-success" role="alert" aria-live="assertive" aria-atomic="true" class="toast bg-success" data-autohide="false">
+              <div class="toast-header">
+                <strong class="mr-auto">Transaction Result Notification</strong>
+                <small>now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div id="transaction-success-message" class="toast-body text-white">
+               
+              </div>
+            </div>
+
+            <div id="transaction-error" role="alert" aria-live="assertive" aria-atomic="true" class="toast bg-danger" data-autohide="false">
+              <div class="toast-header">
+                <strong class="mr-auto">Transaction Result Notification</strong>
+                <small>now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div id="transaction-error-message" class="toast-body text-white">
+               
+              </div>
+            </div>
         </main>
     </div>
 </body>

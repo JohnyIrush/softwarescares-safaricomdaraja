@@ -8,6 +8,7 @@ use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\CustomerT
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\MpesaExpressController;
 
 use Illuminate\Http\Request;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaController;
 
 Route::post("mpesaexpress/result",[MpesaExpressController::class, "result"]);
 
@@ -22,3 +23,8 @@ Route::post("businesstocustomer/result",[BusinessToCustomerController::class, "r
  * processing in the queue.  
  */
 Route::post("businesstocustomer/queue-timeout",[BusinessToCustomerController::class, "queueTimeOutURL"]);
+
+// Transaction result notification
+
+Route::get("transaction/result/notification",[DarajaController::class, "transactionResultNotification"]);
+Route::post("transaction/result/notification/read",[DarajaController::class, "readTransactionNotification"]);

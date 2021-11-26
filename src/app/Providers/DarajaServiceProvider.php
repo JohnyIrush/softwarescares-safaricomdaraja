@@ -2,6 +2,7 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Providers;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 class DarajaServiceProvider extends ServiceProvider
@@ -29,6 +30,7 @@ class DarajaServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'safaricomdaraja'); //-- Package views
         $this->loadMigrationsFrom(__DIR__.'/../../database/migrations'); //-- migrations
 
+        # File::deleteDirectory(public_path('/safaricomdaraja-js'));
         $this->publishes([
             __DIR__.'/../../resources/js/safaricomdaraja-js' => public_path('/safaricomdaraja-js'),
         ], 'safaricomdaraja-js');
@@ -48,6 +50,7 @@ class DarajaServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../public' => public_path('/'),
         ],'assets');
+
         
     }
 }

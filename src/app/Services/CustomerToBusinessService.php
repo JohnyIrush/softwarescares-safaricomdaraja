@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
-use Symfony\Contracts\Translation\TranslatableInterface;
 
 class CustomerToBusinessService extends Transaction implements TransactionInterface
 {
@@ -34,18 +34,33 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
             "ShortCode" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE")
         ];
 
+        return '{
+            "ConversationID": "AG_20191219_000043fdf61864fe9ff5",
+            "OriginatorCoversationID": "16738-27456357-1",
+            "ResponseDescription": "Accept the service request successfully."
+        }
+        ';
         return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/
 
-    public function validation($result)
+    public function validation($result, $user)
     {
         Log::info("Validation Hit!");
-        Log::info(($result));
-        if($result->TransAmount === "0")
-        {
+        Log::info((json_encode($result)));
+        LOG::info("user");
+        Log::info(json_encode($user));
+        if($result->TransAmount > 0)
+        {            
             // Fire Notification
+            event(new  TransactionNotificationEvent([
+                'success' => [
+                   "ResultDesc" => "Accepted",
+                   "ResultCode" => 0
+                ],
+                'user' => $user
+            ]));
 
 
             // Fire an event to Update Transaction Table 
@@ -64,6 +79,13 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
         else
         {
             // Fire Notification
+            event(new  TransactionNotificationEvent ([
+                'success' => [
+                   "ResultDesc" => "Amount Not Great Than 0",
+                   "ResultCode" => 1
+                ],
+                'user' => $user
+            ]));
 
             // Return validation response - rejected depending on our validation rules
             return json_encode(
@@ -81,7 +103,7 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
         
     }
 
-    public function result($result)
+    public function result($result, $user)
     {
         
     }

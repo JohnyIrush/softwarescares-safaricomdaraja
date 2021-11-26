@@ -6,10 +6,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
-use Softwarescares\Safaricomdaraja\app\Events\MpesaExpressTransactionAcceptedEvent;
-use Softwarescares\Safaricomdaraja\app\Notification\MpesaExpressTransactionAcceptedNotification;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
+use Softwarescares\Safaricomdaraja\app\Notification\TransactionNotification;
 
-class MpesaExpressTransactionAcceptedEventListener
+class TransactionNotificationEventListener
 {
     /**
      * Create the event listener.
@@ -27,11 +27,11 @@ class MpesaExpressTransactionAcceptedEventListener
      * @param  object  $event
      * @return void
      */
-    public function handle(MpesaExpressTransactionAcceptedEvent $event)
+    public function handle(TransactionNotificationEvent $event)
     {
         Log::info("MpesaExpressTransactionAcceptedEvent  Listener");
         Log::info(json_encode($event));
 
-     Notification::send($event->success["user"], new MpesaExpressTransactionAcceptedNotification($event));
+     Notification::send($event->success["user"], new TransactionNotification($event));
     }
 }

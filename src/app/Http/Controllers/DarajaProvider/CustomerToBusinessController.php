@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
 
@@ -13,6 +14,7 @@ class CustomerToBusinessController extends Controller
 
     public function __construct(CustomerToBusinessService $transactionService)
     {
+        $this->middleware("web");
         $this->transactionService = $transactionService;
     }
     /**
@@ -51,7 +53,7 @@ class CustomerToBusinessController extends Controller
      */
     public function validation(Request $request)
     {
-        $this->transactionService->validation($request->all());
+        $this->transactionService->validation($request->all(), Auth::user());
     }
 
     /**

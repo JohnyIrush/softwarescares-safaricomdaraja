@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Event;
 
 use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
-use Softwarescares\Safaricomdaraja\app\Events\MpesaExpressTransactionAcceptedEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Listeners\BusinessToCustomerTransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\CustomerToBusinessTransactionEventListener;
-use Softwarescares\Safaricomdaraja\app\Listeners\MpesaExpressTransactionAcceptedEventListener;
+use Softwarescares\Safaricomdaraja\app\Listeners\TransactionNotificationEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\MPesaExpressTransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\TransactionStatusNotificationEventlistener;
 
@@ -39,8 +39,8 @@ class DarajaEventServiceProvider extends ServiceProvider
         TransactionStatusNotificationEvent::class => [
          TransactionStatusNotificationEventlistener::class,
         ],
-        MpesaExpressTransactionAcceptedEvent::class => [
-        MpesaExpressTransactionAcceptedEventListener::class,
+        TransactionNotificationEvent::class => [
+            TransactionNotificationEventListener::class,
         ],
         ];
     /**

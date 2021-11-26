@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
 class BusinessToCustomerservice extends Transaction implements TransactionInterface
@@ -33,27 +34,34 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "Occassion" => "Business To Customers" 
         ];
 
+        return '{    
+            "ConversationID": "AG_20191219_00005797af5d7d75f652",    
+            "OriginatorConversationID": "16740-34861180-1",    
+            "ResponseCode": "0",    
+            "ResponseDescription": "Accept the service request successfully."
+           }';
+
         return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function result($result, $user)
     {
         Log::info("B2C results hit");
-        Log::info($result);
-        if($result["Body"]["stkCallback"]["ResultCode"] === "0")
-        {
+        Log::info(json_encode($result));
             // Fire Notification
-
+            event(new  TransactionNotificationEvent ([
+                'success' => [
+                   "ResultDesc" => $result->Result->ResultDesc,
+                   "ResultCode" => $result->Result->ResultCode
+                ],
+                'user' => $user
+            ]));
             // Fire an event to Update Transaction Table 
 
             event(new BusinessToCustomerTransactionEvent($result));
-        }
-        else
-        {
-            // Fire Notification
-        }
+
     }
 
     public function queueTimeout($result)

@@ -9,12 +9,13 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class CustomerToBusinessTransactionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $result;
+    public $result;
 
     /**
      * Create a new event instance.
@@ -23,6 +24,7 @@ class CustomerToBusinessTransactionEvent
      */
     public function __construct($result)
     {
+        Log::info("CustomerToBusinessTransactionEvent");
         $this->result = $result;
     }
 

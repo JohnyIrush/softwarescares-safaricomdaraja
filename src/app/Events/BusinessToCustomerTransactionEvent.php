@@ -14,7 +14,7 @@ class BusinessToCustomerTransactionEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $result;
+    public $result;
 
     /**
      * Create a new event instance.

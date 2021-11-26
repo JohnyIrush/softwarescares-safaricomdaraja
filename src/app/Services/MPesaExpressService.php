@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
-use Softwarescares\Safaricomdaraja\app\Events\MpesaExpressTransactionAcceptedEvent;
+use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
@@ -43,40 +43,38 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         Log::info(json_encode($body));
 
         Log::info(($this->serviceRequest($url, $body)));
+        return '{    
+            "MerchantRequestID": "29115-34620561-1",    
+            "CheckoutRequestID": "ws_CO_191220191020363925",    
+            "ResponseCode": "0",    
+            "ResponseDescription": "Success. Request accepted for processing",    
+            "CustomerMessage": "Success. Request accepted for processing"
+         }';
         return $this->serviceRequest($url, $body);
 
     }
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function result($result, $user)
     {
         Log::info("Result Hit!");
-        Log::info($result);
-        if($result["Body"]["stkCallback"]["ResultCode"] === "0")
-        {
              LOG::info("STK Result Success");
-             LOG::info($result);
+             Log::info(json_encode($result));
+             LOG::info("user");
+             Log::info(json_encode($user));
              // Fire Notification
-             event(new  MpesaExpressTransactionAcceptedEvent ([
-                 'error' => ['errorMessage' => 'success!'],//$response,
-                 //'user' => $user
+             event(new  TransactionNotificationEvent ([
+                 'success' => [
+                    "ResultDesc" => $result->Body->stkCallback->ResultDesc,
+                    "ResultCode" => $result->Body->stkCallback->ResultCode
+                 ],
+                 'user' => $user
              ]));
 
             // Fire an event to Update Transaction Table 
 
             event(new MPesaExpressTransactionEvent($result));
-        }
-        else
-        {
-            // Fire Notification
-            event(new  TransactionStatusNotificationEvent ([
-                'error' => ['errorMessage' => 'ERROR!'],//$response,
-                //user' => $user
-            ]));
-            LOG::info("STK Error");
-            LOG::info($result);
-        }
     }
 
     public function mpesaExpressQuery($CheckoutRequestID)
