@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card">
-        <form action="" method="post">
+        <form id="account-balance-form">
             @csrf
             <button type="submit" class="btn btn-primary">Check Balance</button>
         </form>

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Notification;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
-use Softwarescares\Safaricomdaraja\app\Notification\AccountBalanceNotification;
+use Softwarescares\Safaricomdaraja\app\Notification\TransactionNotification;
 
 class AccountBalanceService extends Transaction implements TransactionInterface
 {
@@ -42,7 +42,7 @@ class AccountBalanceService extends Transaction implements TransactionInterface
     {
         // Fire Notification
 
-        Notification::send($user, new AccountBalanceNotification($result));
+        Notification::send($user, new TransactionNotification($result));
     }
 
     public function queueTimeOutURL($request)

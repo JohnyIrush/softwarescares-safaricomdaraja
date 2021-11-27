@@ -57,11 +57,12 @@ class TransactionNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        Log::info("MpesaExpressTransactionAcceptedNotification");
+        Log::info("TransactionNotification");
         Log::info(json_encode($this->success));
         return [
           "ResultDesc" =>  $this->success->success["success"]["ResultDesc"],
-          "ResultCode" =>  $this->success->success["success"]["ResultCode"],    
+          "ResultCode" =>  $this->success->success["success"]["ResultCode"], 
+          //"ResultCode" =>  $this->success->success["success"]["ResultCode"],    
         ];
     }
 }
