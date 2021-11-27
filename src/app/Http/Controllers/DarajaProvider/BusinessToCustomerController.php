@@ -2,8 +2,9 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
-use App\Http\Controllers\Controller;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Models\BusinessToCustomerTransaction;
@@ -51,7 +52,7 @@ class BusinessToCustomerController extends Controller
     public function result(Request $request)
     {
         Log::info("B2C Result ENDPOINT HIT!");
-        $this->transactionService->result($request->all());
+        $this->transactionService->result($request->all(), Auth::user());
     }
 
 

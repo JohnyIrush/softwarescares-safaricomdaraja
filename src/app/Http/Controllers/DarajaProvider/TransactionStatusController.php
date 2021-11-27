@@ -2,7 +2,7 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
-use App\Http\Controllers\Controller;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
