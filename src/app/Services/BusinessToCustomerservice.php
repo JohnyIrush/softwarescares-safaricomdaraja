@@ -34,12 +34,6 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
             "Occassion" => "Business To Customers" 
         ];
 
-        return '{    
-            "ConversationID": "AG_20191219_00005797af5d7d75f652",    
-            "OriginatorConversationID": "16740-34861180-1",    
-            "ResponseCode": "0",    
-            "ResponseDescription": "Accept the service request successfully."
-           }';
 
         return $this->serviceRequest($url, $body);
     }

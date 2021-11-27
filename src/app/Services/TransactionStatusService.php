@@ -12,11 +12,9 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
 {
     use AuthorizationService;
 
-    private $request;
-
-    public function __construct($request)
+    public function __construct()
     {
-        $this->request = $request;
+
     }
 
     public function transaction($request)
@@ -27,7 +25,7 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
             "InitiatorName" => "testapi",
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "TransactionStatusQuery",
-            "TransactionID" => $this->request->transactionid,
+            "TransactionID" => $request->transactionid,
             "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "IdentifierType" => 2,
             "QueueTimeOutURL" => config('safaricomdaraja.APP_DOMAIN_URL') . "/transaction-status/queue-timeout",
@@ -36,7 +34,7 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
             "Occassion" => "VerifyTransaction",
         ];
 
-        return json_encode($this->serviceRequest($url, $body));
+        return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/

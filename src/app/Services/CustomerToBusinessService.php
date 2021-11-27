@@ -34,12 +34,6 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
             "ShortCode" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE")
         ];
 
-        return '{
-            "ConversationID": "AG_20191219_000043fdf61864fe9ff5",
-            "OriginatorCoversationID": "16738-27456357-1",
-            "ResponseDescription": "Accept the service request successfully."
-        }
-        ';
         return $this->serviceRequest($url, $body);
     }
 

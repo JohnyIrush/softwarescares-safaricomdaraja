@@ -44,13 +44,7 @@ class TransactionReversalService extends Transaction implements TransactionInter
         session(['transaction_type' => $request->transaction_type]);
         session(['transaction_id' => $request->transaction_id]);
 
-        return '{
-            "OriginatorConversationID": "71840-27539181-07",
-            "ConversationID": "AG_20210709_12346c8e6f8858d7b70a",
-            "ResponseCode":"0",
-            "ResponseDescription": "Accept the service request successfully."
-            }';
-        return json_encode($this->serviceRequest($url, $body));
+        return $this->serviceRequest($url, $body);
     }
 
     /*** Handle Transaction Response ***/

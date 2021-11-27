@@ -43,13 +43,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
         Log::info(json_encode($body));
 
         Log::info(($this->serviceRequest($url, $body)));
-        return '{    
-            "MerchantRequestID": "29115-34620561-1",    
-            "CheckoutRequestID": "ws_CO_191220191020363925",    
-            "ResponseCode": "0",    
-            "ResponseDescription": "Success. Request accepted for processing",    
-            "CustomerMessage": "Success. Request accepted for processing"
-         }';
+
         return $this->serviceRequest($url, $body);
 
     }
