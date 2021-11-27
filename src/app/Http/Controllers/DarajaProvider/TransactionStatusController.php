@@ -23,7 +23,6 @@ class TransactionStatusController extends Controller
      */
     public function transactionStatus()
     {
-        dd("hi");
         return view('safaricomdaraja::components.forms.transaction-status-form');
     }
 
