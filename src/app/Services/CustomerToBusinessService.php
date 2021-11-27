@@ -2,6 +2,7 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -9,6 +10,7 @@ use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 
 class CustomerToBusinessService extends Transaction implements TransactionInterface
 {
@@ -53,7 +55,7 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
                    "ResultDesc" => "Accepted",
                    "ResultCode" => 0
                 ],
-                'user' => $user
+                'user' => User::find(CurrentTransactionUser::find(1)->current_transaction_user_id)
             ]));
 
 

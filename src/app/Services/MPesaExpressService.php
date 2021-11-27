@@ -43,8 +43,6 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
-        LOG::info("user: id in trans" . session('auth_user_id'));
-
         return $this->serviceRequest($url, $body);
 
     }
@@ -53,11 +51,6 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function result($result, $user)
     {
-        Log::info("Result Hit!");
-             LOG::info("STK Result Success");
-             LOG::info("Type: " . gettype($result));
-             Log::info(json_encode($result["Body"]));
-             
              // Fire Notification
              event(new  TransactionNotificationEvent ([
                  'success' => [
@@ -66,9 +59,6 @@ class MPesaExpressService extends Transaction implements TransactionInterface
                  ],
                  'user' => User::find(CurrentTransactionUser::find(1)->current_transaction_user_id)
              ]));
-
-             LOG::info("The user is ->");
-             Log::info( json_encode( User::find(CurrentTransactionUser::find(1)->current_transaction_user_id ) ) );
 
             // Fire an event to Update Transaction Table 
 

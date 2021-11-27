@@ -9,22 +9,21 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class MPesaExpressTransactionEvent
+class StoreCurrentTransactionUserEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $result;
+    public $user_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($result)
+    public function __construct($user_id)
     {
-        $this->result = $result;
+        $this->user_id = $user_id;
     }
 
     /**

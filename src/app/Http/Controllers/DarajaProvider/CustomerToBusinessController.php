@@ -5,6 +5,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
 
@@ -41,6 +42,7 @@ class CustomerToBusinessController extends Controller
 
     public function customerToBusiness(Request $request)
     {
+        event(new StoreCurrentTransactionUserEvent(Auth::user()->id)); // persists this user even after the callback from safaricom
         return $this->transactionService->transaction($request->all());
     }
 
@@ -53,7 +55,7 @@ class CustomerToBusinessController extends Controller
      */
     public function validation(Request $request)
     {
-        $this->transactionService->validation($request->all(), Auth::user());
+        $this->transactionService->validation($request->all(),[]);
     }
 
     /**

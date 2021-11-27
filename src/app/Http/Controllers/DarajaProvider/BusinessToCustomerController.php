@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 use Softwarescares\Safaricomdaraja\app\Models\BusinessToCustomerTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\BusinessToCustomerservice;
 
@@ -40,6 +41,7 @@ class BusinessToCustomerController extends Controller
      */
     public function businessToCustomer(Request $request)
     {
+        event(new StoreCurrentTransactionUserEvent(Auth::user()->id)); // persists this user even after the callback from safaricom
         return $this->transactionService->transaction($request->all());
     }
 
@@ -52,7 +54,7 @@ class BusinessToCustomerController extends Controller
     public function result(Request $request)
     {
         Log::info("B2C Result ENDPOINT HIT!");
-        $this->transactionService->result($request->all(), Auth::user());
+        $this->transactionService->result($request->all(), []);
     }
 
 

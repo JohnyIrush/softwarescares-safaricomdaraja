@@ -2,6 +2,7 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Request;
@@ -12,6 +13,7 @@ use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionReversalEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionUpdateReversalEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 use Softwarescares\Safaricomdaraja\app\Notification\TransactionReversalNotification;
 
 class TransactionReversalService extends Transaction implements TransactionInterface
@@ -58,7 +60,7 @@ class TransactionReversalService extends Transaction implements TransactionInter
                "ResultDesc" => $result->Result->ResultDesc,
                "ResultCode" => $result->Result->ResultCode
             ],
-            'user' => $user
+            'user' => User::find(CurrentTransactionUser::find(1)->current_transaction_user_id)
         ]));
 
         

@@ -2,12 +2,14 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 
 class BusinessToCustomerservice extends Transaction implements TransactionInterface
 {
@@ -50,7 +52,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
                    "ResultDesc" => $result->Result->ResultDesc,
                    "ResultCode" => $result->Result->ResultCode
                 ],
-                'user' => $user
+                'user' => User::find(CurrentTransactionUser::find(1)->current_transaction_user_id)
             ]));
             // Fire an event to Update Transaction Table 
 

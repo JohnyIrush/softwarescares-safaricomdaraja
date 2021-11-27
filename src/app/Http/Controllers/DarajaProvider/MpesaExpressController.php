@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 use Softwarescares\Safaricomdaraja\app\Models\MpesaExpressTransaction;
 
@@ -53,10 +54,7 @@ class MpesaExpressController extends Controller
      */
     public function mpesaExpress(Request $request)
     {
-        CurrentTransactionUser::updateOrCreate(
-            ['id' =>  1],
-            ['current_transaction_user_id' =>Auth::user()->id]
-        );
+        event(new StoreCurrentTransactionUserEvent(Auth::user()->id)); // persists this user even after the callback from safaricom
 
         return ($this->transactionService->transaction($request->all()));
     }

@@ -32,21 +32,23 @@ class TransactionReversalEventListener
     {
         Log::info("TransactionReversalEventListener");
 
+        $result = json_decode(json_encode($event->result));
+
        TransactionReversal::create(
             [
-                "ResultType" => $event->result->Result->ResultType,                     
-                "ResultCode" => $event->result->Result->ResultCode,            
-                "ResultDesc" => $event->result->Result->ResultDesc,
-                "OriginatorConversationID" =>   $event->result->Result->OriginatorConversationID,
-                "ConversationID" => $event->result->Result->ConversationID,
-                "TransactionID" => $event->result->Result->TransactionID,
-                "DebitAccountBalance" => isset($event->result->Result->ResultParameters->ResultParameter[0]->Value)? $event->result->Result->ResultParameters->ResultParameter[0]->Value: null,
-                "Amount" => isset($event->result->Result->ResultParameters->ResultParameter[1]->Value)? $event->result->Result->ResultParameters->ResultParameter[1]->Value: null,
-                "TransCompletedTime" => isset($event->result->Result->ResultParameters->ResultParameter[2]->Value)? $event->result->Result->ResultParameters->ResultParameter[2]->Value: null,
-                "OriginalTransactionID" => isset($event->result->Result->ResultParameters->ResultParameter[3]->Value)?$event->result->Result->ResultParameters->ResultParameter[3]->Value :null ,
-                "Charge" => isset($event->result->Result->ResultParameters->ResultParameter[4]->Value)? $event->result->Result->ResultParameters->ResultParameter[4]->Value: null,
-                "CreditPartyPublicName" => isset($event->result->Result->ResultParameters->ResultParameter[5]->Value)? $event->result->Result->ResultParameters->ResultParameter[5]->Value: null,
-                "DebitPartyPublicName" => isset($event->result->Result->ResultParameters->ResultParameter[6]->Value)? $event->result->Result->ResultParameters->ResultParameter[6]->Value: null,
+                "ResultType" => $result->Result->ResultType,                     
+                "ResultCode" => $result->Result->ResultCode,            
+                "ResultDesc" => $result->Result->ResultDesc,
+                "OriginatorConversationID" =>   $result->Result->OriginatorConversationID,
+                "ConversationID" => $result->Result->ConversationID,
+                "TransactionID" => $result->Result->TransactionID,
+                "DebitAccountBalance" => isset($result->Result->ResultParameters->ResultParameter[0]->Value)? $result->Result->ResultParameters->ResultParameter[0]->Value: null,
+                "Amount" => isset($result->Result->ResultParameters->ResultParameter[1]->Value)? $result->Result->ResultParameters->ResultParameter[1]->Value: null,
+                "TransCompletedTime" => isset($result->Result->ResultParameters->ResultParameter[2]->Value)? $result->Result->ResultParameters->ResultParameter[2]->Value: null,
+                "OriginalTransactionID" => isset($result->Result->ResultParameters->ResultParameter[3]->Value)?$result->Result->ResultParameters->ResultParameter[3]->Value :null ,
+                "Charge" => isset($result->Result->ResultParameters->ResultParameter[4]->Value)? $result->Result->ResultParameters->ResultParameter[4]->Value: null,
+                "CreditPartyPublicName" => isset($result->Result->ResultParameters->ResultParameter[5]->Value)? $result->Result->ResultParameters->ResultParameter[5]->Value: null,
+                "DebitPartyPublicName" => isset($result->Result->ResultParameters->ResultParameter[6]->Value)? $result->Result->ResultParameters->ResultParameter[6]->Value: null,
                 'transaction_id' => 6,
                 'transaction_type' => 'c2b'
             ]

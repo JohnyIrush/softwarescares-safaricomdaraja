@@ -2,10 +2,12 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Notification;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 use Softwarescares\Safaricomdaraja\app\Notification\TransactionNotification;
 
 class TransactionStatusService extends Transaction implements TransactionInterface
@@ -43,6 +45,6 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
     {
         // Fire Notification
 
-        Notification::send($user, new TransactionNotification($result));
+        Notification::send(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id), new TransactionNotification($result));
     }
 }

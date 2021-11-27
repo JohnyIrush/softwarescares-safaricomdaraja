@@ -30,22 +30,25 @@ class BusinessToCustomerTransactionEventListener
     {
         Log::info("BusinessToCustomerTransactionEvent ");
 
+        $result = json_decode(json_encode($event->result));
+    
+
         BusinessToCustomerTransaction::create(
             [
-                "ResultType" => $event->result->Result->ResultType,                     
-                "ResultCode" => $event->result->Result->ResultCode,            
-                "ResultDesc" => $event->result->Result->ResultDesc,
-                "OriginatorConversationID" =>   $event->result->Result->OriginatorConversationID,
-                "ConversationID" => $event->result->Result->ConversationID,
-                "TransactionID" => $event->result->Result->TransactionID,
-                "TransactionAmount" => isset($event->result->Result->ResultParameters->ResultParameter[0]->Value)? $event->result->Result->ResultParameters->ResultParameter[0]->Value: null,
-                "TransactionReceipt" => isset($event->result->Result->ResultParameters->ResultParameter[1]->Value)? $event->result->Result->ResultParameters->ResultParameter[1]->Value: null,
-                "B2CWorkingAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[7]->Value)? $event->result->Result->ResultParameters->ResultParameter[7]->Value:null ,
-                "B2CRecipientIsRegisteredCustomer" => isset($event->result->Result->ResultParameters->ResultParameter[2]->Value)? :null ,
-                "B2CChargesPaidAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[3]->Value)? $event->result->Result->ResultParameters->ResultParameter[3]->Value: null,
-                "ReceiverPartyPublicName" => isset($event->result->Result->ResultParameters->ResultParameter[4]->Value)? $event->result->Result->ResultParameters->ResultParameter[4]->Value: null,
-                "TransactionCompletedDateTime" => isset($event->result->Result->ResultParameters->ResultParameter[5]->Value)? $event->result->Result->ResultParameters->ResultParameter[5]->Value: null,
-                "B2CUtilityAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[6]->Value)? $event->result->Result->ResultParameters->ResultParameter[6]->Value: null,
+                "ResultType" => $result->Result->ResultType,                     
+                "ResultCode" => $result->Result->ResultCode,            
+                "ResultDesc" => $result->Result->ResultDesc,
+                "OriginatorConversationID" =>   $result->Result->OriginatorConversationID,
+                "ConversationID" => $result->Result->ConversationID,
+                "TransactionID" => $result->Result->TransactionID,
+                "TransactionAmount" => isset($result->Result->ResultParameters->ResultParameter[0]->Value)? $result->Result->ResultParameters->ResultParameter[0]->Value: null,
+                "TransactionReceipt" => isset($result->Result->ResultParameters->ResultParameter[1]->Value)? $result->Result->ResultParameters->ResultParameter[1]->Value: null,
+                "B2CWorkingAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[7]->Value)? $result->Result->ResultParameters->ResultParameter[7]->Value:null ,
+                "B2CRecipientIsRegisteredCustomer" => isset($result->Result->ResultParameters->ResultParameter[2]->Value)? :null ,
+                "B2CChargesPaidAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[3]->Value)? $result->Result->ResultParameters->ResultParameter[3]->Value: null,
+                "ReceiverPartyPublicName" => isset($result->Result->ResultParameters->ResultParameter[4]->Value)? $result->Result->ResultParameters->ResultParameter[4]->Value: null,
+                "TransactionCompletedDateTime" => isset($result->Result->ResultParameters->ResultParameter[5]->Value)? $result->Result->ResultParameters->ResultParameter[5]->Value: null,
+                "B2CUtilityAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[6]->Value)? $result->Result->ResultParameters->ResultParameter[6]->Value: null,
                 'order_id' => 2
             ]
         );

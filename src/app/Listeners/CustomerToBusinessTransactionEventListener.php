@@ -30,21 +30,24 @@ class CustomerToBusinessTransactionEventListener
     {
        Log::info("CustomerToBusinessTransactionEventListener");
        Log::info(json_encode($event->result));
+
+       $result = json_decode(json_encode($event->result));
+
        CustomerToBusinessTransaction::create(
             [
-                "TransactionType" => $event->result->TransactionType,
-                "TransID" => $event->result->TransID,
-                "TransTime" => $event->result->TransTime,
-                "TransAmount" => $event->result->TransAmount,
-                "BusinessShortCode" => $event->result->BusinessShortCode,
-                "BillRefNumber" => $event->result->BillRefNumber,
-                "InvoiceNumber" => $event->result->InvoiceNumber,
-                "OrgAccountBalance" => $event->result->OrgAccountBalance,
-                "ThirdPartyTransID" =>$event->result->ThirdPartyTransID ,
-                "MSISDN" => $event->result->MSISDN,
-                "FirstName" => $event->result->FirstName,
-                "MiddleName" => $event->result->MiddleName,
-                "LastName" => $event->result->LastName,
+                "TransactionType" => $result->TransactionType,
+                "TransID" => $result->TransID,
+                "TransTime" => $result->TransTime,
+                "TransAmount" => $result->TransAmount,
+                "BusinessShortCode" => $result->BusinessShortCode,
+                "BillRefNumber" => $result->BillRefNumber,
+                "InvoiceNumber" => $result->InvoiceNumber,
+                "OrgAccountBalance" => $result->OrgAccountBalance,
+                "ThirdPartyTransID" =>$result->ThirdPartyTransID ,
+                "MSISDN" => $result->MSISDN,
+                "FirstName" => $result->FirstName,
+                "MiddleName" => $result->MiddleName,
+                "LastName" => $result->LastName,
                 "order_id" => 2
             ]
         );

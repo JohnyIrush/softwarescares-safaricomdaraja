@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 
 class AccountBalanceController extends Controller
 {
@@ -38,6 +39,7 @@ class AccountBalanceController extends Controller
 
     public function transaction(Request $request)
     {
+        event(new StoreCurrentTransactionUserEvent(Auth::user()->id)); // persists this user even after the callback from safaricom
         return $this->transactionService->transaction($request);
     }
 

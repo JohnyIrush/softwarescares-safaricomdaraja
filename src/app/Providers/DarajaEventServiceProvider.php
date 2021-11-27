@@ -11,6 +11,7 @@ use Softwarescares\Safaricomdaraja\app\Events\BusinessToCustomerTransactionEvent
 use Softwarescares\Safaricomdaraja\app\Events\CustomerToBusinessTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionReversalEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionUpdateReversalEvent;
@@ -18,6 +19,7 @@ use Softwarescares\Safaricomdaraja\app\Listeners\BusinessToCustomerTransactionEv
 use Softwarescares\Safaricomdaraja\app\Listeners\CustomerToBusinessTransactionEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\TransactionNotificationEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\MPesaExpressTransactionEventListener;
+use Softwarescares\Safaricomdaraja\app\Listeners\StoreCurrentTransactionUserEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\TransactionReversalEventListener;
 use Softwarescares\Safaricomdaraja\app\Listeners\TransactionStatusNotificationEventlistener;
 use Softwarescares\Safaricomdaraja\app\Listeners\TransactionUpdateReversalEventListener;
@@ -52,6 +54,9 @@ class DarajaEventServiceProvider extends ServiceProvider
 
         TransactionUpdateReversalEvent::class => [
             TransactionUpdateReversalEventListener::class,
+        ],
+        StoreCurrentTransactionUserEvent::class => [
+            StoreCurrentTransactionUserEventListener::class,
         ],
         ];
     /**

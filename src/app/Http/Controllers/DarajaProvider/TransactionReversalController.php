@@ -6,6 +6,7 @@ use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
 
 class TransactionReversalController extends Controller
 {
@@ -27,6 +28,7 @@ class TransactionReversalController extends Controller
 
     public function transaction(Request $request)
     {
+        event(new StoreCurrentTransactionUserEvent(Auth::user()->id)); // persists this user even after the callback from safaricom
         return $this->transactionService->transaction($request);
     }
 
@@ -42,7 +44,7 @@ class TransactionReversalController extends Controller
 
     public function result(Request $request)
     {
-        $this->transactionService->result($request, Auth::user());
+        $this->transactionService->result($request, []);
     }
 
     /**
