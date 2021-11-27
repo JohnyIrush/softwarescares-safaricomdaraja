@@ -38,15 +38,15 @@ class BusinessToCustomerTransactionEventListener
                 "OriginatorConversationID" =>   $event->result->Result->OriginatorConversationID,
                 "ConversationID" => $event->result->Result->ConversationID,
                 "TransactionID" => $event->result->Result->TransactionID,
-                "TransactionAmount" =>  isset($event->result->Result->ResultParameters->ResultParameter[0]->Value)? $event->result->Result->ResultParameters->ResultParameter[0]->Value : null,
-                "TransactionReceipt" =>  isset($event->result->Result->ResultParameters->ResultParameter[1]->Value)?$event->result->Result->ResultParameters->ResultParameter[1]->Value : null,
-                "TransactionReceipt" =>  isset($event->result->Result->ResultParameters->ResultParameter[2]->Value)?$event->result->Result->ResultParameters->ResultParameter[2]->Value : null,
-                "B2CRecipientIsRegisteredCustomer" =>  isset($event->result->Result->ResultParameters->ResultParameter[3]->Value)?$event->result->Result->ResultParameters->ResultParameter[3]->Value : null,
-                "B2CChargesPaidAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[4]->Value )?$event->result->Result->ResultParameters->ResultParameter[4]->Value : null,
-                "ReceiverPartyPublicName" =>  isset($event->result->Result->ResultParameters->ResultParameter[5]->Value)?$event->result->Result->ResultParameters->ResultParameter[5]->Value : null,
-                "TransactionCompletedDateTime" =>  isset($event->result->Result->ResultParameters->ResultParameter[6]->Value)?$event->result->Result->ResultParameters->ResultParameter[6]->Value : null,
-                "B2CUtilityAccountAvailableFunds" =>  isset($event->result->Result->ResultParameters->ResultParameter[7]->Value)?$event->result->Result->ResultParameters->ResultParameter[7]->Value : null,
-                'order_id' => 1
+                "TransactionAmount" => isset($event->result->Result->ResultParameters->ResultParameter[0]->Value)? $event->result->Result->ResultParameters->ResultParameter[0]->Value: null,
+                "TransactionReceipt" => isset($event->result->Result->ResultParameters->ResultParameter[1]->Value)? $event->result->Result->ResultParameters->ResultParameter[1]->Value: null,
+                "B2CWorkingAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[7]->Value)? $event->result->Result->ResultParameters->ResultParameter[7]->Value:null ,
+                "B2CRecipientIsRegisteredCustomer" => isset($event->result->Result->ResultParameters->ResultParameter[2]->Value)? :null ,
+                "B2CChargesPaidAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[3]->Value)? $event->result->Result->ResultParameters->ResultParameter[3]->Value: null,
+                "ReceiverPartyPublicName" => isset($event->result->Result->ResultParameters->ResultParameter[4]->Value)? $event->result->Result->ResultParameters->ResultParameter[4]->Value: null,
+                "TransactionCompletedDateTime" => isset($event->result->Result->ResultParameters->ResultParameter[5]->Value)? $event->result->Result->ResultParameters->ResultParameter[5]->Value: null,
+                "B2CUtilityAccountAvailableFunds" => isset($event->result->Result->ResultParameters->ResultParameter[6]->Value)? $event->result->Result->ResultParameters->ResultParameter[6]->Value: null,
+                'order_id' => 2
             ]
         );
     }

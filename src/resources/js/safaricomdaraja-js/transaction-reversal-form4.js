@@ -3,17 +3,20 @@ $('#transaction-reversal-form').on('submit',function(e){
     e.preventDefault();
 
     let Amount = $('#Amount').val();
-    let Phone = $('#Phone').val();
+    let transactionid = $("#transactionid").val();
+    let transaction_type = $("#transaction_type").val();
+    let transaction_id = $("#transaction_id").val();
 
     
     $.ajax({
-      url: "/account-balance",
+      url: "/transaction-reversal",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),
         Amount:Amount,
-        Phone:Phone,
-        TransactionID:transaction-id,
+        transactionid: transactionid,
+        transaction_id: transaction_id, 
+        transaction_type: transaction_type 
       },
       success: function(response){
           console.log(response);
@@ -21,7 +24,7 @@ $('#transaction-reversal-form').on('submit',function(e){
 
          if(response.ResponseCode == "0")
          {
-          notificationAlert("Transaction Request Status",response.ResponseDescription, "success");
+          notificationAlert("Transaction Request Status",response.ResultDescription, "success");
           setTimeout(() => {
             transactionResultNotification();
           }, 3000);
@@ -50,7 +53,7 @@ $('#transaction-reversal-form').on('submit',function(e){
           //response = (JSON.parse(response));
           console.log(response[0].data);
 
-           if(response[0].data.ResultCode == 0)
+           if(response[0].data.ResultCode == 21)
            {
             console.log(response[0].data.ResultDesc);
            // alert(response[0].data.ResultDesc, "success");
@@ -58,6 +61,7 @@ $('#transaction-reversal-form').on('submit',function(e){
             //$('#transaction-success-message').text(response[0].data.ResultDesc);
             //$('#transaction-success').toast("show")
             readNotification(response[0].id);
+            $("#reverse-state").html('<p class="text-success">Reversed</p>')
            }
            else 
            {// case where transaction is not processed successfully

@@ -1,8 +1,8 @@
-$('#customer-to-business-form').on('submit',function(e){
+$('#account-balance-form').on('submit',function(e){
     e.preventDefault();
     
     $.ajax({
-      url: "/customer-to-business",
+      url: "/account-balance",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),

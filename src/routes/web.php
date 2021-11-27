@@ -42,6 +42,7 @@ Route::post("account-balance",[AccountBalanceController::class, "transaction"]);
 // Trsansaction Reversal 
 
 Route::post("transaction-reversal",[TransactionReversalController::class, "transaction"]); // Initiate transaction reversal
+Route::get("transactionreversal",[TransactionReversalController::class, "transactionReversal"]); // render transaction reversal form
 
 
 

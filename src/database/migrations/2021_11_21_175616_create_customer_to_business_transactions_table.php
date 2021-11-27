@@ -29,6 +29,8 @@ class CreateCustomerToBusinessTransactionsTable extends Migration
             $table->string("FirstName");
             $table->string("MiddleName");
             $table->string("LastName");
+            $table->string("Reversed")->default("false");
+            $table->integer("transaction_reversal_id")->nullable();
             $table->timestamps();
         });
     }

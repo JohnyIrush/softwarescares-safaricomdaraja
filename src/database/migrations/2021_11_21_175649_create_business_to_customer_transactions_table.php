@@ -30,6 +30,8 @@ class CreateBusinessToCustomerTransactionsTable extends Migration
             $table->text("ReceiverPartyPublicName")->nullable();
             $table->text("TransactionCompletedDateTime")->nullable();
             $table->text("B2CUtilityAccountAvailableFunds")->nullable();
+            $table->string("Reversed")->default("false");
+            $table->integer("transaction_reversal_id")->nullable();
             $table->timestamps();
         });
     }

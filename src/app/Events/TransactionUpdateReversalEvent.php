@@ -11,7 +11,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class TransactionReversalEvent
+class TransactionUpdateReversalEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -24,7 +24,7 @@ class TransactionReversalEvent
      */
     public function __construct($result)
     {
-        Log::info("TransactionReversalEvent");
+        # dd('TransactionUpdateReversalEvent');
         $this->result = $result;
     }
 

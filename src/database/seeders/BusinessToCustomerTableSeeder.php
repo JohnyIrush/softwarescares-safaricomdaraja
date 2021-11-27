@@ -116,14 +116,14 @@ class BusinessToCustomerTableSeeder extends Seeder
             "OriginatorConversationID" =>   $result->Result->OriginatorConversationID,
             "ConversationID" => $result->Result->ConversationID,
             "TransactionID" => $result->Result->TransactionID,
-            "TransactionAmount" =>  isset($result->Result->ResultParameters->ResultParameter[0]->Value)? $result->Result->ResultParameters->ResultParameter[0]->Value : null,
-            "TransactionReceipt" =>  isset($result->Result->ResultParameters->ResultParameter[1]->Value)?$result->Result->ResultParameters->ResultParameter[1]->Value : null,
-            "TransactionReceipt" =>  isset($result->Result->ResultParameters->ResultParameter[2]->Value)?$result->Result->ResultParameters->ResultParameter[2]->Value : null,
-            "B2CRecipientIsRegisteredCustomer" =>  isset($result->Result->ResultParameters->ResultParameter[3]->Value)?$result->Result->ResultParameters->ResultParameter[3]->Value : null,
-            "B2CChargesPaidAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[4]->Value )?$result->Result->ResultParameters->ResultParameter[4]->Value : null,
-            "ReceiverPartyPublicName" =>  isset($result->Result->ResultParameters->ResultParameter[5]->Value)?$result->Result->ResultParameters->ResultParameter[5]->Value : null,
-            "TransactionCompletedDateTime" =>  isset($result->Result->ResultParameters->ResultParameter[6]->Value)?$result->Result->ResultParameters->ResultParameter[6]->Value : null,
-            "B2CUtilityAccountAvailableFunds" =>  isset($result->Result->ResultParameters->ResultParameter[7]->Value)?$result->Result->ResultParameters->ResultParameter[7]->Value : null,
+            "TransactionAmount" => isset($result->Result->ResultParameters->ResultParameter[0]->Value)? $result->Result->ResultParameters->ResultParameter[0]->Value: null,
+            "TransactionReceipt" => isset($result->Result->ResultParameters->ResultParameter[1]->Value)? $result->Result->ResultParameters->ResultParameter[1]->Value: null,
+            "B2CWorkingAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[7]->Value)? $result->Result->ResultParameters->ResultParameter[7]->Value:null ,
+            "B2CRecipientIsRegisteredCustomer" => isset($result->Result->ResultParameters->ResultParameter[2]->Value)? :null ,
+            "B2CChargesPaidAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[3]->Value)? $result->Result->ResultParameters->ResultParameter[3]->Value: null,
+            "ReceiverPartyPublicName" => isset($result->Result->ResultParameters->ResultParameter[4]->Value)? $result->Result->ResultParameters->ResultParameter[4]->Value: null,
+            "TransactionCompletedDateTime" => isset($result->Result->ResultParameters->ResultParameter[5]->Value)? $result->Result->ResultParameters->ResultParameter[5]->Value: null,
+            "B2CUtilityAccountAvailableFunds" => isset($result->Result->ResultParameters->ResultParameter[6]->Value)? $result->Result->ResultParameters->ResultParameter[6]->Value: null,
             'order_id' => 2
          ]
      );
