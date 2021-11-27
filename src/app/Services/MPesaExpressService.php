@@ -24,7 +24,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
 
     public function transaction($request)
     {
-        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest" : "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
 
         $body = [
             'BusinessShortCode' => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),

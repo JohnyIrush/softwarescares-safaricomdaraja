@@ -9,6 +9,7 @@ use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\BusinessT
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\CustomerToBusinessController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\MpesaExpressController;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\TransactionReversalController;
+use Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider\TransactionStatusController;
 
 Route::get('/safaricomdaraja', function(){
 
@@ -43,6 +44,10 @@ Route::post("account-balance",[AccountBalanceController::class, "transaction"]);
 
 Route::post("transaction-reversal",[TransactionReversalController::class, "transaction"]); // Initiate transaction reversal
 Route::get("transactionreversal",[TransactionReversalController::class, "transactionReversal"]); // render transaction reversal form
+
+//-- Transaction Status
+Route::post("transaction-status",[TransactionStatusController::class, "transaction"]); // Initiate transaction status request
+
 
 
 

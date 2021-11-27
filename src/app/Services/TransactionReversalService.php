@@ -25,7 +25,7 @@ class TransactionReversalService extends Transaction implements TransactionInter
 
     public function transaction($request)
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/reversal/v1/request" : "https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request";
+        $url = App::environment('production')? "https://api.safaricom.co.ke/mpesa/reversal/v1/request" : "https://sandbox.safaricom.co.ke/mpesa/reversal/v1/request";
 
         $body = [
             "InitiatorName" => "testapi",

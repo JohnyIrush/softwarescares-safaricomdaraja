@@ -19,7 +19,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
 
     public function transaction($request)
     {
-        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://api.safaricom.co.ke/mpesa/b2c/v1/paymentrequest" : "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest";
 
         $body = [
             "InitiatorName" => 'testapi',//config("safaricomdaraja.app.name"),

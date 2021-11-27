@@ -32,7 +32,7 @@ trait AuthorizationService
     {
 
         //dd( base64_encode( config("safaricomdaraja.MPESA.CONSUMER_KEY").":".config("safaricomdaraja.MPESA.CONSUMER_SECRET")) );
-        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://api.safaricom.co.ke/oauth/v1/generate" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
         $curl = curl_init();
         curl_setopt_array($curl,
         [

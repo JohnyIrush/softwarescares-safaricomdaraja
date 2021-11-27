@@ -3,8 +3,10 @@
 namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Notification;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
+use Softwarescares\Safaricomdaraja\app\Notification\TransactionNotification;
 
 class TransactionStatusService extends Transaction implements TransactionInterface
 {
@@ -17,19 +19,19 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
         $this->request = $request;
     }
 
-    public function transaction()
+    public function transaction($request)
     {
-        $url = App::environment('production')? "https://live.safaricom.co.ke/mpesa/transactionstatus/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query";
+        $url = App::environment('production')? "https://api.safaricom.co.ke/mpesa/transactionstatus/v1/query" : "https://sandbox.safaricom.co.ke/mpesa/transactionstatus/v1/query";
 
         $body = [
             "InitiatorName" => "testapi",
             "SecurityCredential" => $this->darajaPasswordGenerator(),
             "CommandID" => "TransactionStatusQuery",
             "TransactionID" => $this->request->transactionid,
-            "PartyA" => env("MPESA_SHORTCODE"),
+            "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             "IdentifierType" => 2,
-            "ResultURL" => "https://daraja.softwarescares.com/api/TransactionStatus/result",
-            "QueueTimeOutURL" => "https://daraja.softwarescares.com/api/TransactionStatus/queue",
+            "QueueTimeOutURL" => config('safaricomdaraja.APP_DOMAIN_URL') . "/transaction-status/queue-timeout",
+            "ResultURL" => config('safaricomdaraja.APP_DOMAIN_URL') . "/transaction-status/result",
             "Remarks" => "CheckTransaction",
             "Occassion" => "VerifyTransaction",
         ];
@@ -39,8 +41,10 @@ class TransactionStatusService extends Transaction implements TransactionInterfa
 
     /*** Handle Transaction Response ***/
 
-    public function result($result)
+    public function result($result, $user)
     {
-        
+        // Fire Notification
+
+        Notification::send($user, new TransactionNotification($result));
     }
 }

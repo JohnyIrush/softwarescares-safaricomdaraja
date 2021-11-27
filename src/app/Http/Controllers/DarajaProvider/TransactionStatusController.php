@@ -4,6 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 
 class TransactionStatusController extends Controller
@@ -12,6 +13,7 @@ class TransactionStatusController extends Controller
 
     public function __construct(TransactionInterface $transactionService)
     {
+        $this->middleware("web");
         $this->transactionService = $transactionService;
     }
     /**
@@ -19,9 +21,9 @@ class TransactionStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function transactionStatus()
     {
-        //
+        return view('safaricomdaraja::components.forms.transaction-status-form');
     }
 
     /**
@@ -32,6 +34,16 @@ class TransactionStatusController extends Controller
     public function create()
     {
         //
+    }
+
+    public function transaction(Request $request)
+    {
+        return $this->transactionService->transaction($request);
+    }
+
+    public function result(Request $request)
+    {
+        $this->transactionService->result($request, Auth::user());
     }
 
     /**

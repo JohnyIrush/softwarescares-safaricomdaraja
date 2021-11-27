@@ -121,7 +121,7 @@ class CustomerToBusinessService extends Transaction implements TransactionInterf
     
     public function customerToBusinessRegisterURL()
     {
-        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://live.safaricom.co.ke/mpesa/c2b/v1/registerurl" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
+        $url = (config('safaricomdaraja.MPESA.ENV') === "production") ? "https://api.safaricom.co.ke/mpesa/c2b/v1/registerurl" : "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl";
 
         $body = array(
             "ShortCode" => config("safaricomdaraja.MPESA.SHORTCODE"),
