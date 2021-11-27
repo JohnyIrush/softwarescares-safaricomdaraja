@@ -2,16 +2,21 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
+use App\Models\User;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 use Softwarescares\Safaricomdaraja\app\Models\MpesaExpressTransaction;
 
 class MpesaExpressController extends Controller
 {
 
     protected $transactionService;
+
+    public $user;
 
     public function __construct(TransactionInterface $transactionService)
     {
@@ -48,6 +53,11 @@ class MpesaExpressController extends Controller
      */
     public function mpesaExpress(Request $request)
     {
+        CurrentTransactionUser::updateOrCreate(
+            ['id' =>  1],
+            ['current_transaction_user_id' =>Auth::user()->id]
+        );
+
         return ($this->transactionService->transaction($request->all()));
     }
 
@@ -59,7 +69,9 @@ class MpesaExpressController extends Controller
      */
     public function result(Request $request)
     {
-        $this->transactionService->result($request->all(), Auth::user());
+        Log::info("request callback: " . json_encode($request->all()));
+        Log::info("mpesa express result hit");
+        $this->transactionService->result($request->all(), []);
     }
 
 

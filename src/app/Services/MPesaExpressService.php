@@ -11,6 +11,9 @@ use Softwarescares\Safaricomdaraja\app\Events\MPesaExpressTransactionEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionStatusNotificationEvent;
 use Softwarescares\Safaricomdaraja\app\Extensions\Transaction;
 
+use App\Models\User;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
+
 class MPesaExpressService extends Transaction implements TransactionInterface
 {
     use AuthorizationService;
@@ -35,14 +38,12 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'PartyA' => $request["Phone"],
             'PartyB' => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             'PhoneNumber' => $request["Phone"],
-            'CallBackURL' => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . '/mpesaexpress/result',
+            'CallBackURL' => "https://packageengine.softwarescares.com/mpesaexpress/result",//config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . '/mpesaexpress/result',
             'AccountReference' => config("app.name"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
 
-        Log::info(json_encode($body));
-
-        Log::info(($this->serviceRequest($url, $body)));
+        LOG::info("user: id in trans" . session('auth_user_id'));
 
         return $this->serviceRequest($url, $body);
 
@@ -54,17 +55,20 @@ class MPesaExpressService extends Transaction implements TransactionInterface
     {
         Log::info("Result Hit!");
              LOG::info("STK Result Success");
-             Log::info(json_encode($result));
-             LOG::info("user");
-             Log::info(json_encode($user));
+             LOG::info("Type: " . gettype($result));
+             Log::info(json_encode($result["Body"]));
+             
              // Fire Notification
              event(new  TransactionNotificationEvent ([
                  'success' => [
-                    "ResultDesc" => $result->Body->stkCallback->ResultDesc,
-                    "ResultCode" => $result->Body->stkCallback->ResultCode
+                    "ResultDesc" => $result["Body"]["stkCallback"]["ResultDesc"],
+                    "ResultCode" => $result["Body"]["stkCallback"]["ResultCode"]
                  ],
-                 'user' => $user
+                 'user' => User::find(CurrentTransactionUser::find(1)->current_transaction_user_id)
              ]));
+
+             LOG::info("The user is ->");
+             Log::info( json_encode( User::find(CurrentTransactionUser::find(1)->current_transaction_user_id ) ) );
 
             // Fire an event to Update Transaction Table 
 
