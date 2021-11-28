@@ -17,6 +17,7 @@ class BusinessToCustomerController extends Controller
 
     public function __construct(TransactionInterface $transactionService)
     {
+        $this->middleware("web");
         $this->transactionService = $transactionService;
     }
 
