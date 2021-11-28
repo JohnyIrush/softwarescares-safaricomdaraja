@@ -1,8 +1,8 @@
-$('#account-balance-form').on('submit',function(e){
+$('#transaction-status-form').on('submit',function(e){
     e.preventDefault();
     
     $.ajax({
-      url: "/account-balance",
+      url: "/transaction-status",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),
@@ -16,7 +16,7 @@ $('#account-balance-form').on('submit',function(e){
           notificationAlert("Transaction Request Status",response.ResponseDescription, "success");
           setTimeout(() => {
             transactionResultNotification();
-          }, 3000);
+          }, 7000);
          }
          else 
          {// case where transaction is not accepted for processing

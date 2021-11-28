@@ -1,5 +1,5 @@
 
-$('#business-to-customer-form').on('submit',function(e){
+$('#mpesa-express-form').on('submit',function(e){
     e.preventDefault();
 
     let Amount = $('#Amount').val();
@@ -7,7 +7,7 @@ $('#business-to-customer-form').on('submit',function(e){
 
     
     $.ajax({
-      url: "/account-balance",
+      url: "/mpesa-express",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),
@@ -15,29 +15,29 @@ $('#business-to-customer-form').on('submit',function(e){
         Phone:Phone,
       },
       success: function(response){
-          console.log(response);
           response = (JSON.parse(response));
 
          if(response.ResponseCode == "0")
          {
-          notificationAlert("Transaction Request Status",response.ResponseDescription, "success");
+          console.log(response);
+          notificationAlert("Transaction Request Status",response.CustomerMessage, "success");
           setTimeout(() => {
             transactionResultNotification();
-          }, 3000);
+          }, 7000);
          }
          else 
          {// case where transaction is not accepted for processing
-          console.log(response);
+         console.log(response);
           notificationAlert("Transaction Request Status",response.errorMessage, "error");
+      
          }
 
       },
       error: function(response) {
-          console.log(response)
+          console.log(response);
       },
       });
     });
-
 
     function transactionResultNotification()
     {
@@ -93,7 +93,7 @@ $('#business-to-customer-form').on('submit',function(e){
           url: "transaction/result/notification/read",
           type:"POST",
           data : {
-            "_token": "{{ csrf_token() }}",
+            '_token': $('meta[name="csrf-token"]').attr('content'),
             id: ID
           },
           success: function(response){

@@ -1,51 +1,42 @@
-$('#customer-to-business-form').on('submit',function(e){
+
+$('#business-to-customer-form').on('submit',function(e){
     e.preventDefault();
 
     let Amount = $('#Amount').val();
     let Phone = $('#Phone').val();
-    let Account = $('#Account').val();
+
     
     $.ajax({
-      url: "/customer-to-business",
+      url: "/account-balance",
       type:"POST",
       data:{
         '_token': $('meta[name="csrf-token"]').attr('content'),
         Amount:Amount,
         Phone:Phone,
-        Account:Account,
       },
       success: function(response){
+          console.log(response);
           response = (JSON.parse(response));
 
-         if(response.ConversationID)
+         if(response.ResponseCode == "0")
          {
-          console.log(response);
           notificationAlert("Transaction Request Status",response.ResponseDescription, "success");
           setTimeout(() => {
             transactionResultNotification();
-          }, 3000);
+          }, 7000);
          }
          else 
          {// case where transaction is not accepted for processing
-  
           console.log(response);
           notificationAlert("Transaction Request Status",response.errorMessage, "error");
          }
-        swal({
-           title: "Transaction Status",
-           text: message, //response.data.CustomerMessage,
-           icon: ICON,
-           button: "ok",
-         });
 
       },
       error: function(response) {
-          console.log(response);
+          console.log(response)
       },
       });
     });
-
-
 
 
     function transactionResultNotification()
@@ -84,7 +75,6 @@ $('#customer-to-business-form').on('submit',function(e){
         });
     }
 
-
     function notificationAlert(title,message, ICON)
     {
       swal({
@@ -103,7 +93,7 @@ $('#customer-to-business-form').on('submit',function(e){
           url: "transaction/result/notification/read",
           type:"POST",
           data : {
-            '_token': $('meta[name="csrf-token"]').attr('content'),
+            "_token": "{{ csrf_token() }}",
             id: ID
           },
           success: function(response){
