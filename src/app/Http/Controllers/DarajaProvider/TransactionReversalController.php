@@ -15,6 +15,7 @@ class TransactionReversalController extends Controller
     public function __construct(TransactionInterface $transactionService)
     {
         $this->transactionService = $transactionService;
+        $this->middleware("web");
     }
     /**
      * Display a listing of the resource.
