@@ -49,10 +49,10 @@
                         @if ($transaction->ResultCode == 0 /* && $transaction->Reversed == "false"*/)
                         <form id="transaction-reversal-form" class="px-4 py-3">
                           @csrf
-                            <input type="hidden" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction Id" value="{{ $transaction->TransID}}">
-                            <input type="hidden" name="transaction_type" class="form-control" id="transaction_type"value="c2b">
+                            <input type="hidden" name="transactionid" class="form-control" id="transactionid" placeholder="Transaction Id" value="{{ $transaction->MpesaReceiptNumber}}">
+                            <input type="hidden" name="transaction_type" class="form-control" id="transaction_type"value="c2b-express">
                             <input type="hidden" name="transaction_id" class="form-control" id="transaction_id"value="{{ $transaction->id}} }}">
-                            <input type="hidden" name="Amount" class="form-control" id="Amount" placeholder="Amount" value="{{ $transaction->TransAmount}}">
+                            <input type="hidden" name="Amount" class="form-control" id="Amount" placeholder="Amount" value="{{ $transaction->Amount}}">
                           <button type="submit" class="btn btn-primary">Reverse</button>
                         </form>  
                         @else

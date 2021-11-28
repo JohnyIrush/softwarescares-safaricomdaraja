@@ -10,6 +10,7 @@ use Softwarescares\Safaricomdaraja\app\Events\TransactionReversalEvent;
 use Softwarescares\Safaricomdaraja\app\Events\TransactionUpdateReversalEvent;
 use Softwarescares\Safaricomdaraja\app\Models\BusinessToCustomerTransaction;
 use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
+use Softwarescares\Safaricomdaraja\app\Models\MpesaExpressTransaction;
 use Softwarescares\Safaricomdaraja\app\Models\TransactionReversal;
 
 class TransactionUpdateReversalEventListener
@@ -49,6 +50,11 @@ class TransactionUpdateReversalEventListener
         $transaction->Reversed = 'true';
         $transaction->update();
         
+       } else if ($event->result["transaction_type"] == "c2b-express") {
+        $transaction = MpesaExpressTransaction::find($event->result["transaction_id"]);
+        $transaction->transaction_reversal_id = TransactionReversal::latest()->first()->id;
+        $transaction->Reversed = 'true';
+        $transaction->update();
        }
     }
 }
