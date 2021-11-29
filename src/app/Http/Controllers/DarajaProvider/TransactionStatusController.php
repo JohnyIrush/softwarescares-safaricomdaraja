@@ -2,11 +2,13 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
+use App\Models\User;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Contracts\TransactionInterface;
 use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 
 class TransactionStatusController extends Controller
 {
@@ -45,6 +47,7 @@ class TransactionStatusController extends Controller
 
     public function result(Request $request)
     {
+        Auth::login(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id));
         $this->transactionService->result($request, Auth::user());
     }
 

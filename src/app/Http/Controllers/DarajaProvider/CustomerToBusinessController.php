@@ -2,10 +2,12 @@
 
 namespace Softwarescares\Safaricomdaraja\app\Http\Controllers\DarajaProvider;
 
+use App\Models\User;
 use Softwarescares\Safaricomdaraja\app\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Softwarescares\Safaricomdaraja\app\Events\StoreCurrentTransactionUserEvent;
+use Softwarescares\Safaricomdaraja\app\Models\CurrentTransactionUser;
 use Softwarescares\Safaricomdaraja\app\Models\CustomerToBusinessTransaction;
 use Softwarescares\Safaricomdaraja\app\Services\CustomerToBusinessService;
 
@@ -55,6 +57,7 @@ class CustomerToBusinessController extends Controller
      */
     public function validation(Request $request)
     {
+        Auth::login(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id));
         $this->transactionService->validation($request->all(),[]);
     }
 
@@ -66,6 +69,7 @@ class CustomerToBusinessController extends Controller
      */
     public function confirmation(Request $request)
     {
+        Auth::login(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id));
         $this->transactionService->confirmation($request->all());
     }
 

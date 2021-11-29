@@ -45,6 +45,7 @@ class AccountBalanceController extends Controller
 
     public function result(Request $request)
     {
+        Auth::login(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id));
         $this->transactionService->result($request, Auth::user());
     }
 
