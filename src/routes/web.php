@@ -49,6 +49,10 @@ Route::get("transactionreversal",[TransactionReversalController::class, "transac
 Route::post("transaction-status",[TransactionStatusController::class, "transaction"]); // Initiate transaction status request
 Route::get("transactionstatus",[TransactionStatusController::class, "transactionStatus"]); // render transaction status form
 
+//-- test
+
+Route::get("test",[DarajaController::class, "test"]); // render transaction status form
+
 
 
 

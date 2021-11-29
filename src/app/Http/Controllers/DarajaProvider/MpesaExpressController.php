@@ -69,6 +69,7 @@ class MpesaExpressController extends Controller
     {
         Log::info("request callback: " . json_encode($request->all()));
         Log::info("mpesa express result hit");
+        Auth::login(User::find(CurrentTransactionUser::find(1)->current_transaction_user_id));
         $this->transactionService->result($request->all(), []);
     }
 

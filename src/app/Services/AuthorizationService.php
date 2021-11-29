@@ -5,6 +5,9 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
+use phpseclib\Crypt\RSA as Crypt_RSA;
+use Spatie\Crypto\Rsa\PublicKey;
+
 trait AuthorizationService
 {
     public function constructor()
@@ -45,5 +48,20 @@ trait AuthorizationService
         # print_r(base64_encode(env("MPESA_CONSUMER_KEY").":".env("MPESA_CONSUMER_SECRET")));
         # dd((json_decode(curl_exec($curl))));
         return isset(json_decode(curl_exec($curl))->access_token) == true? json_decode(curl_exec($curl))->access_token : "";
+    }
+
+    /**generates the 64 encoded password
+     * timestamp
+     * passkey
+     * bussinessShortCode
+     * generate password
+     * 
+     */
+    public function darajaSecurityCredentialGenerator()
+    {
+
+
+      return base64_encode( openssl_public_encrypt(unpack('C*', config("MPESA.INITIATORPASSWORD")),$publickey ,OPENSSL_PKCS1_PADDING));
+        
     }
 }

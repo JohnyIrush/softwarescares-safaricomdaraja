@@ -57,6 +57,7 @@ $('#mpesa-express-form').on('submit',function(e){
             //$('#transaction-success-message').text(response[0].data.ResultDesc);
             //$('#transaction-success').toast("show")
             readNotification(response[0].id);
+            paymentSuccess("success");
            }
            else 
            {// case where transaction is not processed successfully
@@ -66,6 +67,7 @@ $('#mpesa-express-form').on('submit',function(e){
             //$('#transaction-error-message').text(response[0].data.ResultDesc);
             //$('#transaction-error').toast("show")
             readNotification(response[0].id);
+            paymentSuccess("failed");
            }
 
         },
@@ -103,4 +105,31 @@ $('#mpesa-express-form').on('submit',function(e){
             
           },
           });
+    }
+
+    //--  This is specific for Current project should be removed from package after installing
+
+    function paymentSuccess(status)
+    {
+
+      let = currency_id =  4;//$('#currency_id').val();
+      let = payment_method =  $('#method').val();
+
+      $.ajax({
+        url: "/deposit/mpesa-payment",
+        type:"POST",
+        data : {
+          '_token': $('meta[name="csrf-token"]').attr('content'),
+          status: status,
+          currency_id: currency_id,
+          payment_method: payment_method
+
+        },
+        success: function(response){
+          Window.location.assign(window.location.hostname + "/deposit/mpesa-payment/success");
+        },
+        error: function(response) {
+          
+        },
+        });
     }
