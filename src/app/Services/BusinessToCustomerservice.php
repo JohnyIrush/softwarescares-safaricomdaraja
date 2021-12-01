@@ -25,7 +25,7 @@ class BusinessToCustomerservice extends Transaction implements TransactionInterf
 
         $body = [
             "InitiatorName" =>config("safaricomdaraja.MPESA.INITIATORNAME"),
-            "SecurityCredential" => $this->darajaPasswordGenerator(),
+            "SecurityCredential" => $this->darajaSecurityCredentialGenerator(),
             "CommandID" => "BusinessPayment",
             "Amount" => $request["Amount"],
             "PartyA" => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),

@@ -4,7 +4,7 @@ namespace Softwarescares\Safaricomdaraja\app\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
-
+use Illuminate\Support\Facades\File;
 use phpseclib\Crypt\RSA as Crypt_RSA;
 use Spatie\Crypto\Rsa\PublicKey;
 
@@ -57,11 +57,16 @@ trait AuthorizationService
      * generate password
      * 
      */
+
+
+
     public function darajaSecurityCredentialGenerator()
     {
+        $publickey = File::get(__DIR__.'/ProductionCertificate.cer');
 
+        openssl_public_encrypt(unpack('C*',config("safaricomdaraja.MPESA.INITIATORPASSWORD")), $output, $publickey, OPENSSL_PKCS1_PADDING);
 
-      return base64_encode( openssl_public_encrypt(unpack('C*', config("MPESA.INITIATORPASSWORD")),$publickey ,OPENSSL_PKCS1_PADDING));
+        return base64_encode($output);
         
     }
 }

@@ -38,7 +38,7 @@ class MPesaExpressService extends Transaction implements TransactionInterface
             'PartyA' => $request["Phone"],
             'PartyB' => config("safaricomdaraja.MPESA.BUSINESSSHORTCODE"),
             'PhoneNumber' => $request["Phone"],
-            'CallBackURL' => "https://packageengine.softwarescares.com/mpesaexpress/result",//config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . '/mpesaexpress/result',
+            'CallBackURL' => config("safaricomdaraja.MPESA.APP_DOMAIN_URL") . '/mpesaexpress/result',//"https://packageengine.softwarescares.com/mpesaexpress/result",
             'AccountReference' => config("app.name"),
             'TransactionDesc' => "Lipa Na M-PESA",
         ];
