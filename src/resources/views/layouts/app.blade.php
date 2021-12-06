@@ -33,6 +33,18 @@
 <body>
     <div id="app">
         <main>
+            {{--Start Ajax Call waiting--}}
+            <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+                <div class="modal-header">
+                    <h1>Please Wait</h1>
+                </div>
+                <div class="modal-body">
+                    <div id="ajax_loader">
+                        <img src="~/Images/ajax-loader.gif" style="display: block; margin-left: auto; margin-right: auto;">
+                    </div>
+                </div>
+            </div>
+            {{--End Ajax Call waiting--}}
             @yield('content')
         </main>
     </div>

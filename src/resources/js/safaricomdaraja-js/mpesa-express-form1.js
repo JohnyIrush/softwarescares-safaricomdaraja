@@ -1,7 +1,7 @@
 
 $('#mpesa-express-form').on('submit',function(e){
     e.preventDefault();
-
+    $('#pleaseWaitDialog').modal();
     let Amount = $('#Amount').val();
     let Phone = $('#Phone').val();
 
@@ -20,8 +20,11 @@ $('#mpesa-express-form').on('submit',function(e){
          if(response.ResponseCode == "0")
          {
           console.log(response);
+          $('#pleaseWaitDialog').modal('hide');
           notificationAlert("Transaction Request Status",response.CustomerMessage, "success");
+          $('#pleaseWaitDialog').modal();
           setTimeout(() => {
+            $('#pleaseWaitDialog').modal('hide');
             transactionResultNotification();
           }, 7000);
          }
